@@ -1,4 +1,4 @@
-flags = -Wall -std=c++17
+flags = -Wall -std=c++17 -g
 target = ../main
 
 textparser.o: textparser.cpp textparser.h

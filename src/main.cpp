@@ -59,8 +59,8 @@ void run(string code)
             cout << ", Type: " << token.type << endl;
         }
         
-        // Program program = Program(tokens);
-        // program.run();
+        Program program = Program(tokens);
+        program.run();
         // if tokens are valid, then run program
    }
    catch(const std::exception& e)

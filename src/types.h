@@ -14,7 +14,8 @@ enum SyntaxType
     method,
     text,
     dot,
-    paren,
+    o_paren,
+    c_paren,
     property,
     end
 };
@@ -29,8 +30,8 @@ static unordered_map<string, SyntaxType> syntax_map = {
     {"console", SyntaxType::object},
     {"log", SyntaxType::method},
     {".", SyntaxType::dot},
-    {"(", SyntaxType::paren},
-    {")", SyntaxType::paren},
+    {"(", SyntaxType::o_paren},
+    {")", SyntaxType::c_paren},
     {"\"", SyntaxType::text},
     {";", SyntaxType::end}
 };
