@@ -1,4 +1,8 @@
 #include "textparser.h"
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 TextParser::TextParser(string text)
 {
@@ -20,77 +24,101 @@ vector<Token> TextParser::tokenize()
 {
     // this is the hard part...
     vector<Token> tokens;
-    string current_token;
-    int j = 0;
+    vector<string> code_components = _parse_code();
 
-    for (uint_64 i = 0; i < _text.size(); i++)
+    for (uint_64 i = 0; i < code_components.size(); i++)
     {
-        if (_text[i] == ' ')
-            continue;
+        string component = code_components[i];
+        SyntaxType type = syntax_map[component];
+        Token token;
+        if (type == SyntaxType::text)
+        {
+           token.content = code_components[i + 1];
+           i++;
+           token.type = type;
+           tokens.push_back(token);
+           continue; 
+        }
 
-        // if (_text[i] == '.')
-        // {
-        //     tokens.push_back(current_token);
-        //     tokens.push_back(".");
-        //     current_token = "";
-        //     j = 0;
-        //     continue;
-        // }
-        // else if (_text[i] == '(')
-        // {
-        //     tokens.push_back(current_token);
-        //     tokens.push_back("(");
-        //     current_token = "";
-        //     j = 0;
-        //     continue;
-        // }
-        // else if (_text[i] == ')')
-        // {
-        //     tokens.push_back(current_token);
-        //     tokens.push_back(")");
-        //     current_token = "";
-        //     j = 0;
-        //     continue;
-        // }
-        // else if (_text[i] == '"')
-        // {
-        //     tokens.push_back("\"");
-        //     current_token = _process_string(i + 1);
-        //     tokens.push_back(current_token);
-        //     tokens.push_back("\"");
-        //     // "Hello" more stuff
-        //     i += current_token.size() + 1;
-        //     j = 0;
-        //     current_token = "";
-        //     continue;
-        // }
-
-        
-        current_token.insert(j, 1, _text[i]);
-        j++;
+        token.type = type;
+        token.content = component;
+        tokens.push_back(token);
     }
 
     return tokens;
 }
 
-string TextParser::_process_string(int pos)
+string TextParser::_process_string(uint_64& pos)
 {
     char current;
-    int i = pos;
     int j = 0;
     string token;
     while (true)
     {
-        current = _text[i];
+        current = _text[pos];
         if (current == '"')
             break;
 
         token.insert(j, 1, current);
 
-        i++;
+        pos++;
         j++;
     }
 
     return token;
+}
+
+vector<string> TextParser::_parse_code()
+{
+    vector<string> components;
+    string current_comp;
+    int j = 0;
+    for (uint_64 i = 0; i < _text.size(); i++)
+    {
+        if (_text[i] == '.')
+        {
+            components.push_back(current_comp);
+            components.push_back(".");
+            current_comp = "";
+            j = 0;
+            continue;
+        }
+        else if (_text[i] == '(')
+        {
+            components.push_back(current_comp);
+            components.push_back("(");
+            current_comp = "";
+            j = 0;
+            continue;
+        }
+        else if (_text[i] == ')')
+        {
+            components.push_back(current_comp);
+            components.push_back(")");
+            current_comp = "";
+            j = 0;
+            continue;
+        }
+        else if (_text[i] == '"')
+        {
+            components.push_back("\"");
+            i++;
+            current_comp = _process_string(i);
+            j = 0;
+            continue;
+        }
+        else if (_text[i] == ';')
+        {
+            components.push_back(";");
+            j = 0;
+            continue;
+        }
+
+        current_comp.insert(j, 1, _text[i]);
+        j++;
+
+    }
+    
+    return components;
 }
 

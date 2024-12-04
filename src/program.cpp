@@ -26,11 +26,11 @@ void Program::run()
     {
         Token token = _tokens[i];
         if (current_leaf->syntax_type == SyntaxType::object)
-            _process_object(token.name);
+            _process_object(token.content);
         else if (current_leaf->syntax_type == SyntaxType::method)
         {
             String message = String("Hello world!");
-            _process_method(token.name, message);
+            _process_method(token.content, message);
 
         }
                 

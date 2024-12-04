@@ -25,7 +25,8 @@ class TextParser
 
     private:
         string _text;
-        string _process_string(int pos);
+        string _process_string(uint_64& pos);
+        vector<string> _parse_code();
 };
 
 #endif

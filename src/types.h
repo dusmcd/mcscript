@@ -8,28 +8,31 @@ using std::unordered_map;
 using std::string;
 using uint_64 = long unsigned int;
 
-// static unordered_map<string, string> syntax_types = {
-//     {"console", "object"},
-//     {"log", "method"},
-//     {".", "."},
-//     {"\"", "\""},
-//     {"(", "("},
-//     {")", ")"},
-// };
 enum SyntaxType
 {
     object,
     method,
     text,
-    connector,
-    property
+    dot,
+    paren,
+    property,
+    end
 };
 
 struct Token
 {
-    string name;
     SyntaxType type;
     string content;
+};
+
+static unordered_map<string, SyntaxType> syntax_map = {
+    {"console", SyntaxType::object},
+    {"log", SyntaxType::method},
+    {".", SyntaxType::dot},
+    {"(", SyntaxType::paren},
+    {")", SyntaxType::paren},
+    {"\"", SyntaxType::text},
+    {";", SyntaxType::end}
 };
 
 

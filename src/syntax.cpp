@@ -16,7 +16,7 @@ SyntaxTree* create_syntax_tree()
 void add_object_children(Leaf* object)
 {
     Leaf* children = new Leaf[object->num_children];
-    children[0].syntax_type = SyntaxType::connector;
+    children[0].syntax_type = SyntaxType::dot;
     children[0].num_children = 2;
 
     add_dot_children(children);
