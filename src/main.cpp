@@ -49,15 +49,15 @@ void run(string code)
    try
    {
         vector<Token> tokens = parser.tokenize();
-        for (Token token : tokens)
-        {
-            if (token.content == "")
-                cout << "Content: " << "NOTHING!";
-            else
-                cout << "Content: " << token.content;
+        // for (Token token : tokens)
+        // {
+        //     if (token.content == "")
+        //         cout << "Content: " << "NOTHING!";
+        //     else
+        //         cout << "Content: " << token.content;
 
-            cout << ", Type: " << token.type << endl;
-        }
+        //     cout << ", Type: " << token.type << endl;
+        // }
         
         Program program = Program(tokens);
         program.run();

@@ -25,7 +25,7 @@ class Program
         vector<Token> _tokens;
         // need something that will store the object used in a statement
         vector<Base*> _objects;
-        vector<string> _object_names;
+        vector<string> _method_names;
 
         void _clear_objects();
         void _process_object(string object_name);

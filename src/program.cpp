@@ -21,37 +21,42 @@ vector<Token> Program::get_tokens() const
 void Program::run()
 {
     SyntaxTree tree = SyntaxTree();
-    tree.print();
-    // Leaf* current_leaf = tree.get_root();
-    // for (uint_64 i = 0; i < _tokens.size(); i++)
-    // {
-    //     Token token = _tokens[i];
-    //     if (current_leaf->syntax_type == SyntaxType::object)
-    //         _process_object(token.content);
-    //     else if (current_leaf->syntax_type == SyntaxType::method)
-    //     {
-    //         String message = String("Hello world!");
-    //         _process_method(token.content, message);
+    Leaf* current_leaf = tree.get_root();
+    for (uint_64 i = 0; i < _tokens.size(); i++)
+    {
+        Token token = _tokens[i];
+        if (current_leaf->syntax_type == SyntaxType::object)
+            _process_object(token.content);
+        else if (current_leaf->syntax_type == SyntaxType::method)
+        {
+            String message = String("Hello world!");
+            _process_method(token.content, message);
 
-    //     }
+        }
                 
-    //     // traverse syntax tree to determine proper syntax
-    //     bool token_found = false;
-    //     SyntaxType syntax_type = _tokens[i + 1].type;
-    //     for (int j = 0; j < current_leaf->num_children; j++)
-    //     {
-    //         if (current_leaf->children[j].syntax_type == syntax_type)
-    //         {
-    //             current_leaf = &(current_leaf->children[j]);
-    //             token_found = true;
-    //             break;
-    //         }
-    //     }
+        if (current_leaf->children == nullptr && token.type == SyntaxType::end)
+        {
+            _clear_objects();
+            _method_names.clear();
+            continue;
+        }
+        // traverse syntax tree to determine proper syntax
+        bool token_found = false;
+        SyntaxType syntax_type = _tokens[i + 1].type;
+        for (int j = 0; j < current_leaf->num_children; j++)
+        {
+            if (current_leaf->children[j].syntax_type == syntax_type)
+            {
+                current_leaf = &(current_leaf->children[j]);
+                token_found = true;
+                break;
+            }
+        }
 
-    //     if (!token_found)
-    //         throw;
+        if (!token_found)
+            throw;
         
-    // }
+    }
 
 }
 
@@ -75,7 +80,6 @@ void Program::_process_object(string object_name)
             object_dict[object_name] = new_object;
         }
         _objects.push_back(object_dict[object_name]);
-        _object_names.push_back(object_name);
     }
     else
         throw;
@@ -86,4 +90,15 @@ void Program::_process_method(string method_name, Object& arg)
 {
     Base* obj = _objects.back();
     obj->CallMethod(method_name, arg);
+}
+
+void Program::_clear_objects()
+{
+    for (Base* obj : _objects)
+    {
+        delete obj;
+        obj = nullptr;
+    }
+
+    _objects.clear();
 }

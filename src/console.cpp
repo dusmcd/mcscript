@@ -23,5 +23,5 @@ void Console::CallMethod(string method_name, Object& arg)
 
 void Console::_set_map()
 {
-    _method_map["Log"] = &Console::Log;
+    _method_map["log"] = &Console::Log;
 }
