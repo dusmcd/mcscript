@@ -16,13 +16,13 @@ class Console : public Base
 {
     public:
         Console();
-        void Log(Object&) const;
+        void Log(Object*) const;
         void Print();
 
-        void CallMethod(string method_name, Object& arg);
+        void CallMethod(string method_name, Object* arg);
     
     private:
-        unordered_map<string, function<void(const Console&, Object&)>> _method_map;
+        unordered_map<string, function<void(const Console&, Object*)>> _method_map;
         void _set_map();
 
 };

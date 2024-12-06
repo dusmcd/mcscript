@@ -1,5 +1,6 @@
 #include "program.h"
 #include "objectcreate.h"
+#include "u_objectcreate.h"
 #include "types.h"
 #include <iostream>
 #include "string.h"
@@ -25,19 +26,30 @@ void Program::run()
     for (uint_64 i = 0; i < _tokens.size(); i++)
     {
         Token token = _tokens[i];
+        SyntaxType next_operation = _operations.size() > 0 ? _operations.back() : SyntaxType::end;
+
         if (current_leaf->syntax_type == SyntaxType::object)
             _process_object(token.content);
         else if (current_leaf->syntax_type == SyntaxType::method)
         {
-            String message = String("Hello world!");
-            _process_method(token.content, message);
-
+            _method_names.push_back(token.content);
+            _operations.push_back(SyntaxType::method);
         }
-                
+        else if (current_leaf->syntax_type == SyntaxType::text)
+        {
+            _process_u_object(token);
+        }
+        else if (current_leaf-> syntax_type == SyntaxType::c_paren)
+        {
+            _process_method(_method_names.back());
+        }
+                        
         if (current_leaf->children == nullptr && token.type == SyntaxType::end)
         {
-            _clear_objects();
+            _object_names.clear();
             _method_names.clear();
+            _operations.clear();
+            current_leaf = tree.get_root();
             continue;
         }
         // traverse syntax tree to determine proper syntax
@@ -58,16 +70,11 @@ void Program::run()
         
     }
 
+    // TODO: free up object_dict
+    delete object_dict["console"];
+    delete u_object_dict["string"];
 }
 
-Program::~Program()
-{
-    for (Base* obj : _objects)
-    {
-        delete obj;
-        obj = nullptr;
-    }
-}
 
 void Program::_process_object(string object_name)
 {
@@ -79,26 +86,28 @@ void Program::_process_object(string object_name)
             Base* new_object = create_object(object_name);
             object_dict[object_name] = new_object;
         }
-        _objects.push_back(object_dict[object_name]);
+        _object_names.push_back(object_name);
     }
     else
         throw;
 
 }
 
-void Program::_process_method(string method_name, Object& arg)
+void Program::_process_method(string method_name)
 {
-    Base* obj = _objects.back();
+    string object_name = _object_names.back();
+    Base* obj = object_dict[object_name];
+    Object* arg =  _func_args.back();
     obj->CallMethod(method_name, arg);
 }
 
-void Program::_clear_objects()
-{
-    for (Base* obj : _objects)
-    {
-        delete obj;
-        obj = nullptr;
-    }
 
-    _objects.clear();
+void Program::_process_u_object(Token token)
+{
+    SyntaxType next_operation = _operations.back();
+    Object* obj = create_u_object(token.type, token.content);
+    u_object_dict["string"] = obj;
+
+    if (next_operation == SyntaxType::method)
+        _func_args.push_back(obj);
 }

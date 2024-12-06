@@ -15,7 +15,6 @@ class Program
 
     public:
         Program(vector<Token> tokens);
-        ~Program();
 
         // getter
         vector<Token> get_tokens() const;
@@ -23,14 +22,14 @@ class Program
         void run();
     private:
         vector<Token> _tokens;
-        // need something that will store the object used in a statement
-        vector<Base*> _objects;
+        vector<string> _object_names;
         vector<string> _method_names;
+        vector<SyntaxType> _operations;
+        vector<Object*> _func_args;
 
-        void _clear_objects();
         void _process_object(string object_name);
-        void _process_method(string method_name, Object& arg);
-        
+        void _process_method(string method_name);
+        void _process_u_object(Token token);
 };
 
 

@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <functional>
 
 using std::unordered_map;
 using std::string;

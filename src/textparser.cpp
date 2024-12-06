@@ -75,6 +75,8 @@ vector<string> TextParser::_parse_code()
     int j = 0;
     for (uint_64 i = 0; i < _text.size(); i++)
     {
+        if (_text[i] == ' ' || _text[i] == '\n')
+            continue;
         if (_text[i] == '.')
         {
             components.push_back(current_comp);

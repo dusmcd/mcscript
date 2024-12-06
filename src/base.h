@@ -15,7 +15,7 @@ class Base
     public:
         void virtual Print() = 0;
 
-        void virtual CallMethod(string, Object&) = 0;
+        void virtual CallMethod(string, Object*) = 0;
 };
 
 
