@@ -26,23 +26,34 @@ void Program::run()
     for (uint_64 i = 0; i < _tokens.size(); i++)
     {
         Token token = _tokens[i];
-        SyntaxType next_operation = _operations.size() > 0 ? _operations.back() : SyntaxType::end;
 
-        if (current_leaf->syntax_type == SyntaxType::object)
-            _process_object(token.content);
-        else if (current_leaf->syntax_type == SyntaxType::method)
+        switch(current_leaf->syntax_type)
         {
-            _method_names.push_back(token.content);
-            _operations.push_back(SyntaxType::method);
+            case SyntaxType::object:
+                _process_object(token.content);
+                break;
+            case SyntaxType::method:
+            {
+                _method_names.push_back(token.content);
+                _operations.push_back(SyntaxType::method);
+                break;
+            }
+            case SyntaxType::text:
+            {
+                _process_u_object(token);
+                break;
+            }
+            case SyntaxType::c_paren:
+            {
+                _process_method(_method_names.back());
+                break;
+            }
+            default:
+            {
+                // not sure whether I need this
+            }
         }
-        else if (current_leaf->syntax_type == SyntaxType::text)
-        {
-            _process_u_object(token);
-        }
-        else if (current_leaf-> syntax_type == SyntaxType::c_paren)
-        {
-            _process_method(_method_names.back());
-        }
+
                         
         if (current_leaf->children == nullptr && token.type == SyntaxType::end)
         {
@@ -72,7 +83,7 @@ void Program::run()
 
     // TODO: free up object_dict
     delete object_dict["console"];
-    delete u_object_dict["string"];
+    object_dict["console"] = nullptr;
 }
 
 
@@ -106,7 +117,6 @@ void Program::_process_u_object(Token token)
 {
     SyntaxType next_operation = _operations.back();
     Object* obj = create_u_object(token.type, token.content);
-    u_object_dict["string"] = obj;
 
     if (next_operation == SyntaxType::method)
         _func_args.push_back(obj);

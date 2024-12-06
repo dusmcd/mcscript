@@ -53,6 +53,11 @@ void SyntaxTree::_free_memory(Leaf* leaf)
 {
     if (leaf != nullptr)
     {
+        for (int i = 1; i < leaf->num_children; i++)
+        {
+            Leaf child = leaf->children[i];
+            _free_memory(child.children);
+        }
         _free_memory(leaf->children);
         delete [] leaf;
     }

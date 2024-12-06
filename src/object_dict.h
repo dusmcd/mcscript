@@ -14,9 +14,6 @@ static unordered_map<string, Base*> object_dict =
     {"console", nullptr}
 };
 
-static unordered_map<string, Object*> u_object_dict = {
-    {"string", nullptr}
-};
 
 
 
