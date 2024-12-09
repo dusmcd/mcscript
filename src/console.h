@@ -16,10 +16,10 @@ class Console : public Base
 {
     public:
         Console();
+        ~Console() override;
         void Log(Object*) const;
-        void Print();
 
-        void CallMethod(string method_name, Object* arg);
+        void CallMethod(string method_name, Object* arg) override;
     
     private:
         unordered_map<string, function<void(const Console&, Object*)>> _method_map;

@@ -13,7 +13,7 @@ using std::string;
 class Base
 {
     public:
-        void virtual Print() = 0;
+        virtual ~Base() {}
 
         void virtual CallMethod(string, Object*) = 0;
 };

@@ -6,15 +6,16 @@ Console::Console()
 {
     _set_map();
 }
+
+Console::~Console()
+{
+}
+
 void Console::Log(Object* obj) const
 {
     obj->Print();
 }
 
-void Console::Print()
-{
-    std::cout << "Printing" << std::endl;
-}
 
 void Console::CallMethod(string method_name, Object* arg)
 {

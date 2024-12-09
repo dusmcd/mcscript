@@ -40,7 +40,7 @@ vector<Token> TextParser::tokenize()
         }
 
         string component = code_components[i];
-        SyntaxType type = syntax_map[component];
+        SyntaxType type = syntax_map.count(component) > 0 ? syntax_map[component] : SyntaxType::identifier;
         Token token;
         if (type == SyntaxType::text)
         {

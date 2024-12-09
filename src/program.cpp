@@ -35,7 +35,7 @@ void Program::run()
             case SyntaxType::method:
             {
                 _method_names.push_back(token.content);
-                _operations.push_back(SyntaxType::method);
+                _operations.push_back(Operations::call_method);
                 break;
             }
             case SyntaxType::text:
@@ -47,6 +47,16 @@ void Program::run()
             {
                 _process_method(_method_names.back());
                 break;
+            }
+            case SyntaxType::identifier:
+            {
+                if (_variables.count(token.content) == 0)
+                    _process_identifier(token);
+                break;
+            }
+            case SyntaxType::keyword:
+            {
+                _process_keyword(token);
             }
             default:
             {
@@ -113,11 +123,38 @@ void Program::_process_method(string method_name)
 }
 
 
-void Program::_process_u_object(Token token)
+void Program::_process_u_object(const Token& token)
 {
-    SyntaxType next_operation = _operations.back();
+    Operations next_operation = _operations.back();
     Object* obj = create_u_object(token.type, token.content);
 
-    if (next_operation == SyntaxType::method)
+    if (next_operation == Operations::call_method)
+    {
         _func_args.push_back(obj);
+        _operations.pop_back();
+    }
+}
+
+void Program::_process_identifier(const Token& token)
+{
+    Operations next_operation = _operations.back();
+    if (next_operation == Operations::declare)
+        _variables[token.content] = nullptr;
+    else if (next_operation == Operations::assign)
+        _variables[token.content] = create_u_object(token.type, token.content);
+    else
+        throw;
+    
+    _operations.pop_back();
+}
+
+void Program::_process_keyword(const Token& token)
+{
+    if (operations_map.count(token.content) == 0)
+        throw;
+
+    Operations next_operation = operations_map[token.content];
+    _operations.push_back(next_operation);
+
+    _operations.pop_back();
 }

@@ -20,7 +20,15 @@ enum SyntaxType
     c_paren,
     property,
     keyword,
+    identifier,
     end
+};
+
+enum Operations
+{
+    call_method,
+    declare,
+    assign
 };
 
 struct Token
@@ -36,7 +44,13 @@ static unordered_map<string, SyntaxType> syntax_map = {
     {"(", SyntaxType::o_paren},
     {")", SyntaxType::c_paren},
     {"\"", SyntaxType::text},
+    {"var", SyntaxType::keyword},
     {";", SyntaxType::end}
+};
+
+static unordered_map<string, Operations> operations_map = {
+    {"var", Operations::declare},
+    {"=", Operations::assign}
 };
 
 

@@ -20,4 +20,5 @@ static unordered_map<SyntaxType, function<Object*(string)>> u_factory_map = {
     {SyntaxType::text, &create_string}
 };
 
+
 #endif
