@@ -28,6 +28,17 @@ vector<Token> TextParser::tokenize()
 
     for (uint_64 i = 0; i < code_components.size(); i++)
     {
+        if (i == 0)
+        {
+            Token begin = {.type = SyntaxType::begin, .content = ""};
+            tokens.push_back(begin);
+        }
+        else if (syntax_map[code_components[i - 1]] == SyntaxType::end)
+        {
+            Token begin = {.type = SyntaxType::begin, .content = ""};
+            tokens.push_back(begin);
+        }
+
         string component = code_components[i];
         SyntaxType type = syntax_map[component];
         Token token;
@@ -39,6 +50,7 @@ vector<Token> TextParser::tokenize()
            tokens.push_back(token);
            continue; 
         }
+
 
         token.type = type;
         token.content = component;

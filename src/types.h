@@ -11,6 +11,7 @@ using uint_64 = long unsigned int;
 
 enum SyntaxType
 {
+    begin,
     object,
     method,
     text,
@@ -18,6 +19,7 @@ enum SyntaxType
     o_paren,
     c_paren,
     property,
+    keyword,
     end
 };
 

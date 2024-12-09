@@ -7,10 +7,10 @@ using std::endl;
 SyntaxTree::SyntaxTree() 
 {
     Leaf* root = new Leaf[1];
-    root->syntax_type = SyntaxType::object;
-    root->num_children = 1;
+    root->syntax_type = SyntaxType::begin;
+    root->num_children = 2;
+    _add_root_children(root);
 
-    _add_object_children(root);
     set_root(root);
 
 }
@@ -61,6 +61,22 @@ void SyntaxTree::_free_memory(Leaf* leaf)
         _free_memory(leaf->children);
         delete [] leaf;
     }
+}
+
+void SyntaxTree::_add_root_children(Leaf* root)
+{
+    Leaf* children = new Leaf[root->num_children];
+
+    children[0].syntax_type = SyntaxType::object;
+    children[0].num_children = 1;
+    children[0].children = nullptr;
+    _add_object_children(&(children[0]));
+
+    children[1].syntax_type = SyntaxType::keyword;
+    children[1].num_children = 1;
+    children[1].children = nullptr;
+
+    root->children = children;
 }
 
 void SyntaxTree::_add_object_children(Leaf* object)
