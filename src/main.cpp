@@ -60,7 +60,7 @@ void run(string code)
         // }
         
         Program program = Program(tokens);
-        program.run();
+        // program.run();
         // if tokens are valid, then run program
    }
    catch(const std::exception& e)

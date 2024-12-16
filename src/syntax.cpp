@@ -1,18 +1,19 @@
 #include "syntax.h"
 #include <iostream>
+#include <fstream>
 
 using std::cout;
 using std::endl;
+using std::ifstream;
 
 SyntaxTree::SyntaxTree() 
 {
     Leaf* root = new Leaf[1];
     root->syntax_type = SyntaxType::begin;
     root->num_children = 2;
-    _add_root_children(root);
-
     set_root(root);
 
+    _get_tree_from_file();
 }
 
 SyntaxTree::~SyntaxTree()
@@ -32,22 +33,6 @@ void SyntaxTree::set_root(Leaf* root)
         _root = root;
 }
 
-void SyntaxTree::print() const
-{
-    // print the tree to console
-    cout << "Printing syntax tree..." << endl;
-    _print_leaf(_root);
-}
-
-void SyntaxTree::_print_leaf(Leaf* leaf) const
-{
-    if (leaf != nullptr)
-    {
-        cout << leaf->syntax_type << endl;
-        for (int i = 0; i < leaf->num_children; i++)
-            _print_leaf(leaf->children + i);
-    }
-}
 
 void SyntaxTree::_free_memory(Leaf* leaf)
 {
@@ -63,87 +48,26 @@ void SyntaxTree::_free_memory(Leaf* leaf)
     }
 }
 
-void SyntaxTree::_add_root_children(Leaf* root)
+void SyntaxTree::_get_tree_from_file()
 {
-    Leaf* children = new Leaf[root->num_children];
+    string file_name = "./config/syntax.json";
+    ifstream config_file(file_name);
 
-    children[0].syntax_type = SyntaxType::object;
-    children[0].num_children = 1;
-    children[0].children = nullptr;
-    _add_object_children(&(children[0]));
+    config_file.seekg(0, config_file.end);
+    int length = config_file.tellg();
+    config_file.seekg(0, config_file.beg);
 
-    children[1].syntax_type = SyntaxType::keyword;
-    children[1].num_children = 1;
-    children[1].children = nullptr;
+    char next;
+    for (int i = 0; i < length; i++)
+    {
+        config_file >> std::noskipws >> next;
+        _config_file.insert(i, 1, next);
+    }
 
-    root->children = children;
+    _parse_json();
 }
 
-void SyntaxTree::_add_object_children(Leaf* object)
+void SyntaxTree::_parse_json()
 {
-    Leaf* children = new Leaf[object->num_children];
-    children[0].syntax_type = SyntaxType::dot;
-    children[0].num_children = 2;
 
-    _add_dot_children(&(children[0]));
-
-    object->children = children;
-}
-
-void SyntaxTree::_add_dot_children(Leaf* dot)
-{
-    Leaf* children = new Leaf[dot->num_children];
-    children[0].num_children = 1;
-    children[0].syntax_type = SyntaxType::method;
-    children[0].children = nullptr;
-    _add_method_children(&(children[0]));
-
-    children[1].num_children = 0;
-    children[1].syntax_type = SyntaxType::property;
-    children[1].children = nullptr;
-
-    dot->children = children;
-}
-
-void SyntaxTree::_add_method_children(Leaf* method)
-{
-    Leaf* children = new Leaf[method->num_children];
-    children[0].syntax_type = SyntaxType::o_paren;
-    children[0].num_children = 1;
-    children[0].children = nullptr;
-    _add_o_paren_children(&(children[0]));
-
-    method->children = children;
-}
-
-void SyntaxTree::_add_o_paren_children(Leaf* o_paren)
-{
-    Leaf* children = new Leaf[o_paren->num_children];
-    children[0].syntax_type = SyntaxType::text;
-    children[0].num_children = 1;
-    children[0].children = nullptr;
-    _add_text_children(&(children[0]));
-
-    o_paren->children = children;
-}
-
-void SyntaxTree::_add_text_children(Leaf* text)
-{
-    Leaf *children = new Leaf[text->num_children];
-    children[0].syntax_type = SyntaxType::c_paren;
-    children[0].num_children = 1;
-    children[0].children = nullptr;
-    _add_c_paren_children(&(children[0]));
-
-    text->children = children;
-}
-
-void SyntaxTree::_add_c_paren_children(Leaf* c_paren)
-{
-    Leaf *children = new Leaf[c_paren->num_children];
-    children[0].syntax_type = SyntaxType::end;
-    children[0].num_children = 0;
-    children[0].children = nullptr;
-
-    c_paren->children = children;
 }
