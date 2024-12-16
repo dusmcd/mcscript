@@ -21,6 +21,7 @@ enum SyntaxType
     property,
     keyword,
     identifier,
+    a_operator,
     end
 };
 
@@ -45,6 +46,7 @@ static unordered_map<string, SyntaxType> syntax_map = {
     {")", SyntaxType::c_paren},
     {"\"", SyntaxType::text},
     {"var", SyntaxType::keyword},
+    {"=", SyntaxType::a_operator},
     {";", SyntaxType::end}
 };
 

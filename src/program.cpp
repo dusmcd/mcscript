@@ -138,12 +138,20 @@ void Program::_process_u_object(const Token& token)
 void Program::_process_identifier(const Token& token)
 {
     Operations next_operation = _operations.back();
-    if (next_operation == Operations::declare)
-        _variables[token.content] = nullptr;
-    else if (next_operation == Operations::assign)
-        _variables[token.content] = create_u_object(token.type, token.content);
-    else
-        throw;
+    switch(next_operation)
+    {
+        case Operations::declare:
+            _variables[token.content] = nullptr;
+            break;
+        case Operations::assign:
+            _variables[token.content] = create_u_object(token.type, token.content);
+            break;
+        case Operations::call_method:
+            _func_args.push_back(_variables[token.content]);
+            break;
+        default:
+            throw;
+    }
     
     _operations.pop_back();
 }

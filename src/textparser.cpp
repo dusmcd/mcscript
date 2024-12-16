@@ -87,8 +87,16 @@ vector<string> TextParser::_parse_code()
     int j = 0;
     for (uint_64 i = 0; i < _text.size(); i++)
     {
-        if (_text[i] == ' ' || _text[i] == '\n')
+        if (_text[i] == '\n')
             continue;
+
+        if (_text[i] == ' ')
+        {
+            components.push_back(current_comp);
+            current_comp = "";
+            j = 0;
+            continue;
+        }
         if (_text[i] == '.')
         {
             components.push_back(current_comp);
@@ -123,7 +131,9 @@ vector<string> TextParser::_parse_code()
         }
         else if (_text[i] == ';')
         {
+            if (current_comp.compare("") != 0) components.push_back(current_comp);
             components.push_back(";");
+            current_comp = "";
             j = 0;
             continue;
         }

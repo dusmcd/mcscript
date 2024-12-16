@@ -1,0 +1,67 @@
+[
+    {
+        "type": "object",
+        "children": [
+            {
+                "type": "dot",
+                "children": [
+                    {
+                        "type": "method",
+                        "children": [
+                            {
+                                "type": "o_paren",
+                                "children": [
+                                    {
+                                        "type": "text",
+                                        "children":["next"]
+                                    },
+                                    {
+                                        "type": "identifier",
+                                        "children": ["next"]
+                                    },
+                                    {
+                                        "type": "c_paren",
+                                        "children": [
+                                            {
+                                                "type": "end",
+                                                "children": false
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "type": "property",
+                        "children": false
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "type": "keyword",
+        "children": [
+            {
+                "type": "identifier",
+                "children": [
+                    {
+                        "type": "a_operator",
+                        "children": [
+                            {
+                                "type": "text",
+                                "children": [
+                                    {
+                                        "type": "end",
+                                        "children": false
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
