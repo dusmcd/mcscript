@@ -4,16 +4,12 @@
 #include <string>
 #include <vector>
 #include "types.h"
+#include "./json_parse/json.h"
 
 using std::string;
 using std::vector;
 
-struct Leaf
-{
-    SyntaxType syntax_type;
-    Leaf* children;
-    int num_children;
-};
+const string CFILE_NAME =  "./config/syntax.json";
 
 class SyntaxTree
 {
@@ -34,8 +30,8 @@ class SyntaxTree
         Leaf* _root;
         string _config_file;
         void _free_memory(Leaf* leaf);
-        void _get_tree_from_file();
-        void _parse_json();
+        Leaf* _get_tree_from_file();
+        Leaf* _parse_json(string json);
 };
 
 #endif

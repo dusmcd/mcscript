@@ -13,7 +13,7 @@ SyntaxTree::SyntaxTree()
     root->num_children = 2;
     set_root(root);
 
-    _get_tree_from_file();
+    root->children = _get_tree_from_file();
 }
 
 SyntaxTree::~SyntaxTree()
@@ -48,9 +48,9 @@ void SyntaxTree::_free_memory(Leaf* leaf)
     }
 }
 
-void SyntaxTree::_get_tree_from_file()
+Leaf* SyntaxTree::_get_tree_from_file()
 {
-    string file_name = "./config/syntax.json";
+    string file_name = CFILE_NAME;
     ifstream config_file(file_name);
 
     config_file.seekg(0, config_file.end);
@@ -64,10 +64,12 @@ void SyntaxTree::_get_tree_from_file()
         _config_file.insert(i, 1, next);
     }
 
-    _parse_json();
+    return _parse_json(_config_file);
 }
 
-void SyntaxTree::_parse_json()
+Leaf* SyntaxTree::_parse_json(string json)
 {
-
+    Json json_parser = Json(json);
+    return json_parser.parse();
 }
+

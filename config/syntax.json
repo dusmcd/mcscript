@@ -1,29 +1,37 @@
 [
     {
         "type": "object",
+        "num_children": 1,
         "children": [
             {
                 "type": "dot",
+                "num_children": 2,
                 "children": [
                     {
                         "type": "method",
+                        "num_children": 1,
                         "children": [
                             {
                                 "type": "o_paren",
+                                "num_children": 3,
                                 "children": [
                                     {
                                         "type": "text",
-                                        "children":["next"]
+                                        "num_children": 1,
+                                        "children": true
                                     },
                                     {
                                         "type": "identifier",
-                                        "children": ["next"]
+                                        "num_children": 1,
+                                        "children": true
                                     },
                                     {
                                         "type": "c_paren",
+                                        "num_children": 1,
                                         "children": [
                                             {
                                                 "type": "end",
+                                                "num_children": 0,
                                                 "children": false
                                             }
                                         ]
@@ -34,6 +42,7 @@
                     },
                     {
                         "type": "property",
+                        "num_children": 0,
                         "children": false
                     }
                 ]
@@ -42,18 +51,23 @@
     },
     {
         "type": "keyword",
+        "num_children": 1,
         "children": [
             {
                 "type": "identifier",
+                "num_children": 1,
                 "children": [
                     {
                         "type": "a_operator",
+                        "num_children": 1,
                         "children": [
                             {
                                 "type": "text",
+                                "num_children": 1,
                                 "children": [
                                     {
                                         "type": "end",
+                                        "num_children": 0,
                                         "children": false
                                     }
                                 ]

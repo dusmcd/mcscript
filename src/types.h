@@ -3,7 +3,6 @@
 
 #include <unordered_map>
 #include <string>
-#include <functional>
 
 using std::unordered_map;
 using std::string;
@@ -38,22 +37,15 @@ struct Token
     string content;
 };
 
-static unordered_map<string, SyntaxType> syntax_map = {
-    {"console", SyntaxType::object},
-    {"log", SyntaxType::method},
-    {".", SyntaxType::dot},
-    {"(", SyntaxType::o_paren},
-    {")", SyntaxType::c_paren},
-    {"\"", SyntaxType::text},
-    {"var", SyntaxType::keyword},
-    {"=", SyntaxType::a_operator},
-    {";", SyntaxType::end}
+struct Leaf
+{
+    SyntaxType syntax_type;
+    Leaf* children;
+    int num_children;
 };
 
-static unordered_map<string, Operations> operations_map = {
-    {"var", Operations::declare},
-    {"=", Operations::assign}
-};
+
+
 
 
 

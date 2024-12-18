@@ -4,6 +4,7 @@
 #include "types.h"
 #include <iostream>
 #include "string.h"
+#include "maps.h"
 
 
 using std::cout;

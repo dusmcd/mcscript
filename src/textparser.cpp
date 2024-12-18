@@ -1,5 +1,6 @@
 #include "textparser.h"
 #include <iostream>
+#include "maps.h"
 
 using std::cout;
 using std::endl;
@@ -22,7 +23,6 @@ string TextParser::get_text() const
 
 vector<Token> TextParser::tokenize()
 {
-    // this is the hard part...
     vector<Token> tokens;
     vector<string> code_components = _parse_code();
 
