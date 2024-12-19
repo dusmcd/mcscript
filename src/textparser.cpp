@@ -33,14 +33,20 @@ vector<Token> TextParser::tokenize()
             Token begin = {.type = SyntaxType::begin, .content = ""};
             tokens.push_back(begin);
         }
-        else if (syntax_map[code_components[i - 1]] == SyntaxType::end)
+
+        else if (syntax_map.count(code_components[i - 1]) > 0 &&
+         syntax_map.at(code_components[i - 1]) == SyntaxType::end)
         {
             Token begin = {.type = SyntaxType::begin, .content = ""};
             tokens.push_back(begin);
         }
 
         string component = code_components[i];
-        SyntaxType type = syntax_map.count(component) > 0 ? syntax_map[component] : SyntaxType::identifier;
+        SyntaxType type;
+        if (syntax_map.count(component) > 0)
+            type = syntax_map[component];
+        else
+            type = SyntaxType::identifier;
         Token token;
         if (type == SyntaxType::text)
         {

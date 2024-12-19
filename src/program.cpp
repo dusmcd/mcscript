@@ -51,14 +51,17 @@ void Program::run()
             }
             case SyntaxType::identifier:
             {
-                if (_variables.count(token.content) == 0)
-                    _process_identifier(token);
+                _process_identifier(token);
                 break;
             }
             case SyntaxType::keyword:
             {
                 _process_keyword(token);
+                break;
             }
+            case SyntaxType::a_operator:
+                _process_operator(token);
+                break;
             default:
             {
                 // not sure whether I need this
@@ -129,11 +132,18 @@ void Program::_process_u_object(const Token& token)
     Operations next_operation = _operations.back();
     Object* obj = create_u_object(token.type, token.content);
 
-    if (next_operation == Operations::call_method)
+    switch(next_operation)
     {
-        _func_args.push_back(obj);
-        _operations.pop_back();
+        case Operations::call_method:
+            _func_args.push_back(obj);
+            _operations.pop_back();
+            break;
+        case Operations::assign:
+            string name = _variable_names.back();
+            _variables[name] = obj;
+            break;
     }
+    _operations.pop_back();
 }
 
 void Program::_process_identifier(const Token& token)
@@ -143,9 +153,7 @@ void Program::_process_identifier(const Token& token)
     {
         case Operations::declare:
             _variables[token.content] = nullptr;
-            break;
-        case Operations::assign:
-            _variables[token.content] = create_u_object(token.type, token.content);
+            _variable_names.push_back(token.content);
             break;
         case Operations::call_method:
             _func_args.push_back(_variables[token.content]);
@@ -165,5 +173,13 @@ void Program::_process_keyword(const Token& token)
     Operations next_operation = operations_map[token.content];
     _operations.push_back(next_operation);
 
-    _operations.pop_back();
+}
+
+void Program::_process_operator(const Token& token)
+{
+    if (operations_map.count(token.content) == 0)
+        throw;
+    
+    Operations next_operation = operations_map[token.content];
+    _operations.push_back(next_operation);
 }

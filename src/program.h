@@ -26,6 +26,7 @@ class Program
         vector<string> _method_names;
         vector<Operations> _operations;
         vector<Object*> _func_args;
+        vector<string> _variable_names;
         unordered_map<string, Object*> _variables;
 
         void _process_object(string object_name);
@@ -33,6 +34,7 @@ class Program
         void _process_u_object(const Token& token);
         void _process_identifier(const Token& token);
         void _process_keyword(const Token& token);
+        void _process_operator(const Token& token);
 };
 
 
