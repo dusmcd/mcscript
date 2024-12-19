@@ -8,12 +8,8 @@ using std::ifstream;
 
 SyntaxTree::SyntaxTree() 
 {
-    Leaf* root = new Leaf[1];
-    root->syntax_type = SyntaxType::begin;
-    root->num_children = 2;
+    Leaf* root = _get_tree_from_file();
     set_root(root);
-
-    root->children = _get_tree_from_file();
 }
 
 SyntaxTree::~SyntaxTree()
@@ -73,3 +69,9 @@ Leaf* SyntaxTree::_parse_json(string json)
     return json_parser.parse();
 }
 
+void SyntaxTree::print(const Leaf& leaf) const
+{
+    cout << "Type: " << leaf.syntax_type << ", Num Children: " << leaf.num_children << endl;
+    for (int i = 0; i < leaf.num_children; i++)
+        print(leaf.children[i]);
+}

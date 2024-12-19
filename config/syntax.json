@@ -1,4 +1,7 @@
-[
+{
+    "type": "begin",
+    "num_children": 2,
+    "children": [
     {
         "type": "object",
         "num_children": 1,
@@ -13,30 +16,45 @@
                         "children": [
                             {
                                 "type": "o_paren",
-                                "num_children": 3,
+                                "num_children": 2,
                                 "children": [
                                     {
                                         "type": "text",
                                         "num_children": 1,
-                                        "children": true
+                                        "children": [
+                                        {
+                                            "type": "c_paren",
+                                            "num_children": 1,
+                                            "children": [
+                                                {
+                                                    "type": "end",
+                                                    "num_children": 0,
+                                                    "children": false
+                                                }
+                                            ]
+                                        }
+
+                                        ]
                                     },
                                     {
                                         "type": "identifier",
                                         "num_children": 1,
-                                        "children": true
-                                    },
-                                    {
-                                        "type": "c_paren",
-                                        "num_children": 1,
                                         "children": [
-                                            {
-                                                "type": "end",
-                                                "num_children": 0,
-                                                "children": false
-                                            }
+                                        {
+                                            "type": "c_paren",
+                                            "num_children": 1,
+                                            "children": [
+                                                {
+                                                    "type": "end",
+                                                    "num_children": 0,
+                                                    "children": false
+                                                }
+                                            ]
+                                        }
+
                                         ]
                                     }
-                                ]
+                                 ]
                             }
                         ]
                     },
@@ -79,3 +97,4 @@
         ]
     }
 ]
+}

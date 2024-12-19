@@ -1,4 +1,5 @@
 #include "json.h"
+#include "../maps.h"
 
 Json::Json(string json)
 {
@@ -8,6 +9,19 @@ Json::Json(string json)
 Leaf* Json::parse()
 {
     _components = _split_to_components(); 
+    Leaf* leaf = new Leaf;
+    for (size_t i = 0; i < _components.size(); i++)
+    {
+        string component = _components[i];
+        if (component.compare("{") == 0)
+        {
+            i++;
+            *leaf = _process_object(i);
+        }
+        else if (component.compare("[") == 0)
+            _process_array(i);
+    }
+    return leaf;
 }
 
 vector<string> Json::_split_to_components()
@@ -97,3 +111,90 @@ string Json::_get_integer(size_t& pos)
 
 }
 
+Leaf Json::_process_object(size_t& idx)
+{
+    Leaf leaf;
+    string key;
+    int offset = 0;
+    while (true)
+    {
+        if (idx + offset + 1 >= _components.size())
+            return leaf;
+        string current = _components[idx];
+        if (current.compare("}") == 0)
+            return leaf;
+        
+        if (current.compare(",") == 0)
+        {
+            idx++;
+            continue;
+        }
+
+        switch(offset)
+        {
+            case 0:
+                key = current;
+                break;
+            case 1:
+                if (current.compare(":") == 0)
+                    break;
+                else
+                    throw;
+            case 2:
+                _set_leaf(leaf, key, current, idx);
+                idx++;
+                offset = 0;
+                continue;
+            default:
+            {
+                // not sure
+            }
+        }
+
+        idx++;
+        offset++;            
+    }
+}
+
+void Json::_set_leaf(Leaf& leaf, string key, string val, size_t& idx)
+{
+    if (key.compare("type") == 0)
+        leaf.syntax_type = string_to_type[val];
+    else if (key.compare("num_children") == 0)
+    {
+        int num = atoi(val.c_str());
+        leaf.num_children = num;
+    }
+    else if (key.compare("children") == 0)
+    {
+        if (val.compare("[") == 0)
+            leaf.children = _process_array(idx, leaf.num_children);
+        else
+            leaf.children = nullptr;
+    }
+}
+
+Leaf* Json::_process_array(size_t& idx, int size)
+{
+    Leaf* leaves = new Leaf[size];
+    int i = 0;
+    while(true)
+    {
+        idx++;
+        string current = _components[idx];
+
+        if (current.compare("]") == 0)
+            return leaves;
+        if (current.compare(",") == 0)
+        {
+            i++;
+            continue;
+        }
+        
+        if (current.compare("{") == 0)
+        {
+            idx++;
+            leaves[i] = _process_object(idx);
+        }
+    }
+}

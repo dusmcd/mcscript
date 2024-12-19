@@ -24,6 +24,7 @@ class SyntaxTree
 
         // setters
         void set_root(Leaf* root);
+        void print(const Leaf& leaf) const;
 
 
     private:
