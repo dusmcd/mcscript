@@ -140,6 +140,8 @@ void Program::_process_u_object(const Token& token)
             break;
         case Operations::assign:
             string name = _variable_names.back();
+            if (_variables.count(name) < 1)
+                throw;
             _variables[name] = obj;
             break;
     }
@@ -156,6 +158,8 @@ void Program::_process_identifier(const Token& token)
             _variable_names.push_back(token.content);
             break;
         case Operations::call_method:
+            if (_variables.count(token.content) < 1)
+                throw;
             _func_args.push_back(_variables[token.content]);
             break;
         default:
