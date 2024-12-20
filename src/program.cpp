@@ -31,15 +31,15 @@ void Program::run()
         switch(current_leaf->syntax_type)
         {
             case SyntaxType::object:
-                _process_object(token.content);
+                _process_object(token.content.data);
                 break;
             case SyntaxType::method:
             {
-                _method_names.push_back(token.content);
+                _method_names.push_back(token.content.data);
                 _operations.push_back(Operations::call_method);
                 break;
             }
-            case SyntaxType::text:
+            case SyntaxType::u_object:
             {
                 _process_u_object(token);
                 break;
@@ -59,7 +59,7 @@ void Program::run()
                 _process_keyword(token);
                 break;
             }
-            case SyntaxType::a_operator:
+            case SyntaxType::operator_t:
                 _process_operator(token);
                 break;
             default:
@@ -74,6 +74,8 @@ void Program::run()
             _object_names.clear();
             _method_names.clear();
             _operations.clear();
+            _func_args.clear();
+            _variable_names.clear();
             current_leaf = tree.get_root();
             continue;
         }
@@ -130,7 +132,7 @@ void Program::_process_method(string method_name)
 void Program::_process_u_object(const Token& token)
 {
     Operations next_operation = _operations.back();
-    Object* obj = create_u_object(token.type, token.content);
+    Object* obj = create_u_object(token.content.type, token.content.data);
 
     switch(next_operation)
     {
@@ -154,13 +156,13 @@ void Program::_process_identifier(const Token& token)
     switch(next_operation)
     {
         case Operations::declare:
-            _variables[token.content] = nullptr;
-            _variable_names.push_back(token.content);
+            _variables[token.content.data] = nullptr;
+            _variable_names.push_back(token.content.data);
             break;
         case Operations::call_method:
-            if (_variables.count(token.content) < 1)
+            if (_variables.count(token.content.data) < 1)
                 throw;
-            _func_args.push_back(_variables[token.content]);
+            _func_args.push_back(_variables[token.content.data]);
             break;
         default:
             throw;
@@ -171,19 +173,19 @@ void Program::_process_identifier(const Token& token)
 
 void Program::_process_keyword(const Token& token)
 {
-    if (operations_map.count(token.content) == 0)
+    if (operations_map.count(token.content.data) == 0)
         throw;
 
-    Operations next_operation = operations_map[token.content];
+    Operations next_operation = operations_map[token.content.data];
     _operations.push_back(next_operation);
 
 }
 
 void Program::_process_operator(const Token& token)
 {
-    if (operations_map.count(token.content) == 0)
+    if (operations_map.count(token.content.data) == 0)
         throw;
     
-    Operations next_operation = operations_map[token.content];
+    Operations next_operation = operations_map[token.content.data];
     _operations.push_back(next_operation);
 }

@@ -27,6 +27,7 @@ class TextParser
         string _text;
         string _process_string(uint_64& pos);
         vector<string> _parse_code();
+        Token _create_u_object_token(string component, vector<string>, size_t& idx);
 };
 
 #endif

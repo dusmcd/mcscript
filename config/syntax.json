@@ -19,7 +19,7 @@
                                 "num_children": 2,
                                 "children": [
                                     {
-                                        "type": "text",
+                                        "type": "u_object",
                                         "num_children": 1,
                                         "children": [
                                         {
@@ -76,11 +76,11 @@
                 "num_children": 1,
                 "children": [
                     {
-                        "type": "a_operator",
+                        "type": "operator_t",
                         "num_children": 1,
                         "children": [
                             {
-                                "type": "text",
+                                "type": "u_object",
                                 "num_children": 1,
                                 "children": [
                                     {

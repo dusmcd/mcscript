@@ -12,9 +12,9 @@ static unordered_map<string, SyntaxType> syntax_map = {
     {".", SyntaxType::dot},
     {"(", SyntaxType::o_paren},
     {")", SyntaxType::c_paren},
-    {"\"", SyntaxType::text},
+    {"\"", SyntaxType::u_object},
     {"var", SyntaxType::keyword},
-    {"=", SyntaxType::a_operator},
+    {"=", SyntaxType::operator_t},
     {";", SyntaxType::end}
 };
 
@@ -27,14 +27,14 @@ static unordered_map<string, SyntaxType> string_to_type = {
     {"begin", SyntaxType::begin},
     {"object", SyntaxType::object},
     {"method", SyntaxType::method},
-    {"text", SyntaxType::text},
+    {"u_object", SyntaxType::u_object},
     {"dot", SyntaxType::dot},
     {"o_paren", SyntaxType::o_paren},
     {"c_paren", SyntaxType::c_paren},
     {"property", SyntaxType::property},
     {"keyword", SyntaxType::keyword},
     {"identifier", SyntaxType::identifier},
-    {"a_operator", SyntaxType::a_operator},
+    {"operator_t", SyntaxType::operator_t},
     {"end", SyntaxType::end},
 };
 

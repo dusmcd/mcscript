@@ -13,14 +13,14 @@ enum SyntaxType
     begin,
     object,
     method,
-    text,
+    u_object,
     dot,
     o_paren,
     c_paren,
     property,
     keyword,
     identifier,
-    a_operator,
+    operator_t,
     end
 };
 
@@ -31,10 +31,24 @@ enum Operations
     assign
 };
 
+enum Type
+{
+    integer,
+    text,
+    boolean,
+    other
+};
+
+struct Content
+{
+    string data;
+    Type type;
+};
+
 struct Token
 {
     SyntaxType type;
-    string content;
+    Content content;
 };
 
 struct Leaf

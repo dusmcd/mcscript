@@ -12,12 +12,12 @@ using std::function;
 using std::string;
 
 
-Object* create_u_object(SyntaxType object_type, string content);
+Object* create_u_object(Type object_type, string content);
 
 Object* create_string(string content);
 
-static unordered_map<SyntaxType, function<Object*(string)>> u_factory_map = {
-    {SyntaxType::text, &create_string}
+static unordered_map<Type, function<Object*(string)>> u_factory_map = {
+    {Type::text, &create_string}
 };
 
 

@@ -118,8 +118,6 @@ Leaf Json::_process_object(size_t& idx)
     int offset = 0;
     while (true)
     {
-        if (idx + offset + 1 >= _components.size())
-            return leaf;
         string current = _components[idx];
         if (current.compare("}") == 0)
             return leaf;

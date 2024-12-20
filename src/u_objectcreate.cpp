@@ -1,7 +1,7 @@
 #include "u_objectcreate.h"
 #include "string.h"
 
-Object* create_u_object(SyntaxType object_type, string content)
+Object* create_u_object(Type object_type, string content)
 {
     return u_factory_map[object_type](content);
 }
