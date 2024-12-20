@@ -100,6 +100,7 @@ void Program::run()
     // TODO: free up object_dict
     delete object_dict["console"];
     object_dict["console"] = nullptr;
+    _free_u_objects();
 }
 
 
@@ -133,6 +134,7 @@ void Program::_process_u_object(const Token& token)
 {
     Operations next_operation = _operations.back();
     Object* obj = create_u_object(token.content.type, token.content.data);
+    _u_objects.push_back(obj);
 
     switch(next_operation)
     {
@@ -188,4 +190,17 @@ void Program::_process_operator(const Token& token)
     
     Operations next_operation = operations_map[token.content.data];
     _operations.push_back(next_operation);
+}
+void Program::_free_u_objects()
+{
+    for (Object* obj : _u_objects)
+    {
+        delete obj;
+        obj = nullptr;
+    }
+
+    for (const auto& [name, pointer] : _variables)
+    {
+        _variables[name] = nullptr;
+    }
 }

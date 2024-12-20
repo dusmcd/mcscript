@@ -14,3 +14,8 @@ void String::Print()
     cout << _string << endl;
 }
 
+String::~String() 
+{
+
+}
+

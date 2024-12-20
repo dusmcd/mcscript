@@ -11,6 +11,7 @@ class String : public Object
     public:
         void Print();
         String(string content);
+        ~String() override;
 
     private:
         string _string;

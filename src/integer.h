@@ -9,6 +9,7 @@ class Integer : public Object
     public:
         Integer(int num);
         void Print();
+        ~Integer() override;
 
         // setters
         void set_num(int num);

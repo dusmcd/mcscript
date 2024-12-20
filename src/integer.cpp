@@ -23,3 +23,8 @@ int Integer::get_num() const
 {
     return _num;
 }
+
+Integer::~Integer()
+{
+
+}

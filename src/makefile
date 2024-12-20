@@ -10,6 +10,9 @@ console.o: console.cpp console.h
 string.o: string.cpp string.h
 	g++ $< $(flags) -c
 
+integer.o: integer.cpp integer.h
+	g++ $< $(flags) -c
+
 syntax.o: syntax.cpp syntax.h 
 	g++ $< $(flags) -c
 
@@ -28,7 +31,7 @@ json.o: ./json_parse/json.cpp ./json_parse/json.h
 main.o: main.cpp textparser.h program.h
 	g++ $< $(flags) -c
 
-main: main.o textparser.o console.o string.o syntax.o program.o objectcreate.o u_objectcreate.o json.o
+main: main.o textparser.o console.o string.o syntax.o program.o objectcreate.o u_objectcreate.o json.o integer.o
 	g++ $^ $(flags) -o $(target)
 
 clean:

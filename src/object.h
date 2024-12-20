@@ -5,6 +5,7 @@ class Object
 {
     public:
         void virtual Print() = 0;
+        virtual ~Object() {}
 };
 
 
