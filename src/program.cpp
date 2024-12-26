@@ -24,6 +24,7 @@ void Program::run()
 {
     SyntaxTree tree = SyntaxTree();
     Leaf* current_leaf = tree.get_root();
+
     for (uint_64 i = 0; i < _tokens.size(); i++)
     {
         Token token = _tokens[i];
