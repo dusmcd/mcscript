@@ -13,6 +13,9 @@ class String : public Object
         String(string content);
         ~String() override;
         string add(const Object* const) const;
+        string subtract(const Object* const) const;
+        string multiply(const Object* const) const;
+        string divide (const Object* const) const;
 
     private:
         string _string;

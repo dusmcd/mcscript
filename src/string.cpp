@@ -24,3 +24,19 @@ string String::add(const Object* const right) const
     return "";
 }
 
+string String::subtract(const Object* const right) const
+{
+    throw;
+}
+
+string String::multiply(const Object* const) const
+{
+    throw;
+}
+
+string String::divide (const Object* const) const
+{
+    throw;
+}
+
+

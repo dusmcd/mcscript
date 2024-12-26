@@ -3,6 +3,7 @@
 
 using std::cout;
 using std::endl;
+using std::to_string;
 
 Integer::Integer(int num)
 {
@@ -32,5 +33,23 @@ Integer::~Integer()
 string Integer::add(const Object* const right) const
 {
     int sum = _num + right->get_num();
-    return std::to_string(sum);
+    return to_string(sum);
+}
+
+string Integer::subtract(const Object* const right) const
+{
+    int diff = _num - right->get_num();
+    return to_string(diff);
+}
+
+string Integer::multiply(const Object* const right) const
+{
+    int product = _num * right->get_num();
+    return to_string(product);
+}
+
+string Integer::divide(const Object* const right) const
+{
+    int quotient = _num / right->get_num();
+    return to_string(quotient);
 }

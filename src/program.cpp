@@ -163,6 +163,42 @@ void Program::_process_u_object(const Token& token)
                 _process_u_object(sum_token);
             }
             break;
+        case Operations::subtract:
+            _operands.push_back(obj);
+            if (_operands.size() == 2)
+            {
+                string new_obj = _operands[0]->subtract(_operands[1]);
+                Token new_token = {.type = SyntaxType::u_object};
+                new_token.content.data = new_obj;
+                new_token.content.type = token.content.type;
+                _operations.pop_back();
+                _process_u_object(new_token);
+            }
+            break;
+        case Operations::multiply:
+            _operands.push_back(obj);
+            if (_operands.size() == 2)
+            {
+                string new_obj = _operands[0]->multiply(_operands[1]);
+                Token new_token = {.type = SyntaxType::u_object};
+                new_token.content.data = new_obj;
+                new_token.content.type = token.content.type;
+                _operations.pop_back();
+                _process_u_object(new_token);
+            }
+            break;
+        case Operations::divide:
+            _operands.push_back(obj);
+            if (_operands.size() == 2)
+            {
+                string new_obj = _operands[0]->divide(_operands[1]);
+                Token new_token = {.type = SyntaxType::u_object};
+                new_token.content.data = new_obj;
+                new_token.content.type = token.content.type;
+                _operations.pop_back();
+                _process_u_object(new_token);
+            }
+            break;
         default:
             _operands.push_back(obj);
     }

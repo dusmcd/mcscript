@@ -30,6 +30,9 @@ enum Operations
     declare,
     assign,
     add,
+    subtract,
+    multiply,
+    divide,
     none
 };
 
