@@ -81,12 +81,29 @@
                         "children": [
                             {
                                 "type": "u_object",
-                                "num_children": 1,
+                                "num_children": 2,
                                 "children": [
                                     {
                                         "type": "end",
                                         "num_children": 0,
                                         "children": false
+                                    },
+                                    {
+                                        "type": "operator_t",
+                                        "num_children": 1,
+                                        "children": [
+                                            {
+                                                "type": "u_object",
+                                                "num_children": 1,
+                                                "children": [
+                                                    {
+                                                        "type": "end",
+                                                        "num_children": 0,
+                                                        "children": false
+                                                    }
+                                                ]
+                                            }
+                                        ]
                                     }
                                 ]
                             }

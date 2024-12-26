@@ -29,8 +29,8 @@ Integer::~Integer()
 
 }
 
-Object* Integer::add(const Object* const right) const
+string Integer::add(const Object* const right) const
 {
     int sum = _num + right->get_num();
-    return new Integer(sum);
+    return std::to_string(sum);
 }

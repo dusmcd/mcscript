@@ -29,7 +29,8 @@ enum Operations
     call_method,
     declare,
     assign,
-    add
+    add,
+    none
 };
 
 enum Type

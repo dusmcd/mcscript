@@ -19,8 +19,8 @@ String::~String()
 
 }
 
-Object* String::add(const Object* const right) const
+string String::add(const Object* const right) const
 {
-    return nullptr;
+    return "";
 }
 

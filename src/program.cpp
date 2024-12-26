@@ -134,7 +134,7 @@ void Program::_process_method(string method_name)
 
 void Program::_process_u_object(const Token& token)
 {
-    Operations next_operation = _operations.back();
+    Operations next_operation = _operations.size() == 0 ? Operations::none : _operations.back();
     Object* obj = create_u_object(token.content.type, token.content.data);
     _u_objects.push_back(obj);
 
@@ -143,21 +143,24 @@ void Program::_process_u_object(const Token& token)
     {
         case Operations::call_method:
             _func_args.push_back(obj);
-            _operations.pop_back();
             break;
         case Operations::assign:
             name = _variable_names.back();
             if (_variables.count(name) < 1)
                 throw;
             _variables[name] = _u_objects.back();
+            _operands.push_back(_u_objects.back());
             break;
         case Operations::add:
             _operands.push_back(obj);
             if (_operands.size() == 2)
             {
-                // create new integer obj
-                Object* new_obj = _operands[0]->add(_operands[1]);
-                _u_objects.push_back(new_obj);
+                string new_obj = _operands[0]->add(_operands[1]);
+                Token sum_token = {.type = SyntaxType::u_object};
+                sum_token.content.data = new_obj;
+                sum_token.content.type = token.content.type;
+                _operations.pop_back();
+                _process_u_object(sum_token);
             }
             break;
         default:
