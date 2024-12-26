@@ -77,6 +77,7 @@ void Program::run()
             _operations.clear();
             _func_args.clear();
             _variable_names.clear();
+            _operands.clear();
             current_leaf = tree.get_root();
             continue;
         }
@@ -137,6 +138,7 @@ void Program::_process_u_object(const Token& token)
     Object* obj = create_u_object(token.content.type, token.content.data);
     _u_objects.push_back(obj);
 
+    string name;
     switch(next_operation)
     {
         case Operations::call_method:
@@ -144,13 +146,23 @@ void Program::_process_u_object(const Token& token)
             _operations.pop_back();
             break;
         case Operations::assign:
-            string name = _variable_names.back();
+            name = _variable_names.back();
             if (_variables.count(name) < 1)
                 throw;
-            _variables[name] = obj;
+            _variables[name] = _u_objects.back();
             break;
+        case Operations::add:
+            _operands.push_back(obj);
+            if (_operands.size() == 2)
+            {
+                // create new integer obj
+                Object* new_obj = _operands[0]->add(_operands[1]);
+                _u_objects.push_back(new_obj);
+            }
+            break;
+        default:
+            _operands.push_back(obj);
     }
-    _operations.pop_back();
 }
 
 void Program::_process_identifier(const Token& token)
@@ -171,7 +183,6 @@ void Program::_process_identifier(const Token& token)
             throw;
     }
     
-    _operations.pop_back();
 }
 
 void Program::_process_keyword(const Token& token)

@@ -98,7 +98,7 @@
     },
     {
         "type": "u_object",
-        "num_children": 1,
+        "num_children": 2,
         "children": [
             {
                 "type": "operator_t",
@@ -116,6 +116,11 @@
                         ]
                     }
                 ]
+            },
+            {
+                "type": "end",
+                "num_children": 0,
+                "children": false
             }
         ]
     }

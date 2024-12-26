@@ -12,6 +12,7 @@ class String : public Object
         void Print();
         String(string content);
         ~String() override;
+        Object* add(const Object* const) const;
 
     private:
         string _string;

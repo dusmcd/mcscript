@@ -10,6 +10,7 @@ class Integer : public Object
         Integer(int num);
         void Print();
         ~Integer() override;
+        Object* add(const Object* const) const;
 
         // setters
         void set_num(int num);

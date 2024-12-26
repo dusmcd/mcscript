@@ -29,6 +29,7 @@ class Program
         vector<string> _variable_names;
         unordered_map<string, Object*> _variables;
         vector<Object*> _u_objects;
+        vector<Object*> _operands;
 
         void _process_object(string object_name);
         void _process_method(string method_name);

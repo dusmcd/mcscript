@@ -15,12 +15,14 @@ static const unordered_map<string, SyntaxType> syntax_map = {
     {"\"", SyntaxType::u_object},
     {"var", SyntaxType::keyword},
     {"=", SyntaxType::operator_t},
+    {"+", SyntaxType::operator_t},
     {";", SyntaxType::end}
 };
 
 static const unordered_map<string, Operations> operations_map = {
     {"var", Operations::declare},
-    {"=", Operations::assign}
+    {"=", Operations::assign},
+    {"+", Operations::add},
 };
 
 static const unordered_map<string, SyntaxType> string_to_type = {

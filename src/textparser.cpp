@@ -48,6 +48,9 @@ vector<Token> TextParser::tokenize()
         string component = code_components[i];
         SyntaxType type = syntax_map.count(component) > 0 ? syntax_map.at(component) : SyntaxType::identifier;
 
+        if (_is_number(component))
+            type = SyntaxType::u_object;
+
         Token token;
         if (type == SyntaxType::u_object)
         {
@@ -161,6 +164,25 @@ Token TextParser::_create_u_object_token(string component, vector<string> code_c
         token.content.data = code_components[idx];
         token.content.type = Type::text;
     }
+    else if (isdigit(component[0]))
+    {
+        token.content.data = component;
+        token.content.type = Type::integer;
+    }
 
     return token;
+}
+
+bool TextParser::_is_number(string comp)
+{
+    try
+    {
+        std::stoi(comp);
+        return true;
+    }
+    catch(const std::exception& e)
+    {
+        return false;
+    }
+    
 }

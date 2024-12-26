@@ -19,3 +19,8 @@ String::~String()
 
 }
 
+Object* String::add(const Object* const right) const
+{
+    return nullptr;
+}
+
