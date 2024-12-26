@@ -6,7 +6,7 @@
 
 using std::unordered_map;
 
-static unordered_map<string, SyntaxType> syntax_map = {
+static const unordered_map<string, SyntaxType> syntax_map = {
     {"console", SyntaxType::object},
     {"log", SyntaxType::method},
     {".", SyntaxType::dot},
@@ -18,12 +18,12 @@ static unordered_map<string, SyntaxType> syntax_map = {
     {";", SyntaxType::end}
 };
 
-static unordered_map<string, Operations> operations_map = {
+static const unordered_map<string, Operations> operations_map = {
     {"var", Operations::declare},
     {"=", Operations::assign}
 };
 
-static unordered_map<string, SyntaxType> string_to_type = {
+static const unordered_map<string, SyntaxType> string_to_type = {
     {"begin", SyntaxType::begin},
     {"object", SyntaxType::object},
     {"method", SyntaxType::method},

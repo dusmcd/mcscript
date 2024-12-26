@@ -178,7 +178,7 @@ void Program::_process_keyword(const Token& token)
     if (operations_map.count(token.content.data) == 0)
         throw;
 
-    Operations next_operation = operations_map[token.content.data];
+    Operations next_operation = operations_map.at(token.content.data);
     _operations.push_back(next_operation);
 
 }
@@ -188,7 +188,7 @@ void Program::_process_operator(const Token& token)
     if (operations_map.count(token.content.data) == 0)
         throw;
     
-    Operations next_operation = operations_map[token.content.data];
+    Operations next_operation = operations_map.at(token.content.data);
     _operations.push_back(next_operation);
 }
 void Program::_free_u_objects()

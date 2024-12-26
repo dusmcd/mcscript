@@ -46,7 +46,7 @@ vector<Token> TextParser::tokenize()
         }
 
         string component = code_components[i];
-        SyntaxType type = syntax_map.count(component) > 0 ? syntax_map[component] : SyntaxType::identifier;
+        SyntaxType type = syntax_map.count(component) > 0 ? syntax_map.at(component) : SyntaxType::identifier;
 
         Token token;
         if (type == SyntaxType::u_object)

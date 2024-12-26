@@ -157,7 +157,7 @@ Leaf Json::_process_object(size_t& idx)
 void Json::_set_leaf(Leaf& leaf, string key, string val, size_t& idx)
 {
     if (key.compare("type") == 0)
-        leaf.syntax_type = string_to_type[val];
+        leaf.syntax_type = string_to_type.at(val);
     else if (key.compare("num_children") == 0)
     {
         int num = atoi(val.c_str());
