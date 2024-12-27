@@ -1,15 +1,13 @@
-#include "textparser.h"
 #include <fstream>
 #include <iostream>
 #include <string>
-#include "program.h"
+#include "runner.h"
 
 using std::string;
 using std::cout;
 using std::endl;
 using std::ifstream;
 
-void run(string code);
 
 int main(int argc, char** argv)
 {
@@ -43,29 +41,3 @@ int main(int argc, char** argv)
     return 0;
 }
 
-void run(string code)
-{
-   TextParser parser = TextParser(code);
-   try
-   {
-        vector<Token> tokens = parser.tokenize();
-        // for (Token token : tokens)
-        // {
-        //     if (token.content == "")
-        //         cout << "Content: " << "NOTHING!";
-        //     else
-        //         cout << "Content: " << token.content;
-
-        //     cout << ", Type: " << token.type << endl;
-        // }
-        
-        Program program = Program(tokens);
-        program.run();
-        // if tokens are valid, then run program
-   }
-   catch(const std::exception& e)
-   {
-        std::cerr << e.what() << '\n';
-   }
-   
-}

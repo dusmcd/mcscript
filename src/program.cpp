@@ -20,7 +20,7 @@ vector<Token> Program::get_tokens() const
     return _tokens;
 }
 
-void Program::run()
+Object* Program::run()
 {
     SyntaxTree tree = SyntaxTree();
     Leaf* current_leaf = tree.get_root();
@@ -103,6 +103,8 @@ void Program::run()
     delete object_dict["console"];
     object_dict["console"] = nullptr;
     _free_u_objects();
+
+    return nullptr;
 }
 
 

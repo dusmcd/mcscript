@@ -19,7 +19,7 @@ class Program
         // getter
         vector<Token> get_tokens() const;
 
-        void run();
+        Object* run();
     private:
         vector<Token> _tokens;
         vector<string> _object_names;
