@@ -5,6 +5,7 @@
 #include <iostream>
 #include "string.h"
 #include "maps.h"
+#include "errors/my_exception.h"
 
 
 using std::cout;
@@ -95,7 +96,7 @@ Object* Program::run()
         }
 
         if (!token_found)
-            throw;
+            throw MyException("syntax error");
         
     }
 
@@ -121,7 +122,7 @@ void Program::_process_object(string object_name)
         _object_names.push_back(object_name);
     }
     else
-        throw;
+        throw MyException("object not found");
 
 }
 
@@ -149,7 +150,7 @@ void Program::_process_u_object(const Token& token)
         case Operations::assign:
             name = _variable_names.back();
             if (_variables.count(name) < 1)
-                throw;
+                throw MyException("identifier not found");
             _variables[name] = _u_objects.back();
             _operands.push_back(_u_objects.back());
             break;
@@ -217,11 +218,11 @@ void Program::_process_identifier(const Token& token)
             break;
         case Operations::call_method:
             if (_variables.count(token.content.data) < 1)
-                throw;
+                throw MyException("identifier not found");
             _func_args.push_back(_variables[token.content.data]);
             break;
         default:
-            throw;
+            throw MyException("operation not allowed");
     }
     
 }
@@ -229,7 +230,7 @@ void Program::_process_identifier(const Token& token)
 void Program::_process_keyword(const Token& token)
 {
     if (operations_map.count(token.content.data) == 0)
-        throw;
+        throw MyException("not a valid keyword");
 
     Operations next_operation = operations_map.at(token.content.data);
     _operations.push_back(next_operation);
@@ -239,7 +240,7 @@ void Program::_process_keyword(const Token& token)
 void Program::_process_operator(const Token& token)
 {
     if (operations_map.count(token.content.data) == 0)
-        throw;
+        throw MyException("not a valid operator");
     
     Operations next_operation = operations_map.at(token.content.data);
     _operations.push_back(next_operation);

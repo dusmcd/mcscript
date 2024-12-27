@@ -28,13 +28,17 @@ u_objectcreate.o: u_objectcreate.cpp u_objectcreate.h
 json.o: ./json_parse/json.cpp ./json_parse/json.h 
 	g++ $< $(flags) -c
 
+my_exception.o: ./errors/my_exception.cpp ./errors/my_exception.h
+	g++ $< $(flags) -c
+
 runner.o: runner.cpp runner.h
 	g++ $< $(flags) -c
 
 main.o: main.cpp textparser.h program.h
 	g++ $< $(flags) -c
 
-main: main.o textparser.o console.o string.o syntax.o program.o objectcreate.o u_objectcreate.o json.o integer.o runner.o
+main: main.o textparser.o console.o string.o syntax.o program.o objectcreate.o\
+ u_objectcreate.o json.o integer.o runner.o my_exception.o
 	g++ $^ $(flags) -o $(target)
 
 clean:

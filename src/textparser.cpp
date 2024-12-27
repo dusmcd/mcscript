@@ -146,6 +146,10 @@ vector<string> TextParser::_parse_code()
             j = 0;
             continue;
         }
+        else if (_text[i] == '{')
+        {
+            components.push_back("{");
+        }
 
         current_comp.insert(j, 1, _text[i]);
         j++;
@@ -185,4 +189,22 @@ bool TextParser::_is_number(string comp)
         return false;
     }
     
+}
+
+bool TextParser::_is_valid_closing(string text, char o_symbol, char c_symbol)
+{
+    vector<char> symbol_stack;
+    for (size_t i = 0; i < text.size(); i++)
+    {
+        if (text[i] == o_symbol)
+            symbol_stack.push_back(text[i]);
+        else if (text[i] == c_symbol)
+        {
+            if (symbol_stack.empty())
+                return false;
+            symbol_stack.pop_back();
+        }
+    }
+
+    return symbol_stack.size() == 0;
 }
