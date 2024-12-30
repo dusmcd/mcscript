@@ -16,7 +16,7 @@ int main(int argc, char** argv)
     int period = file_name.find('.');
     string file_ext = file_name.substr(period + 1, 2);
 
-    if (file_ext.compare("fs") != 0)
+    if (file_ext.compare("ms") != 0)
     {
         cout << "Incompatible file type" << endl;
         return -1;

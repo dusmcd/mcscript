@@ -11,5 +11,5 @@ for later use and do basic arithmetic. This is not intended as a commercial ente
 - Once the project has compiled, type the following command from the root of the project:
     `./main [source file]`
 - There is a sample source file (test.fs) in the project root for demo purposes. All source
-    files must have the ".fs" extension.
+    files must have the ".ms" extension.
 - *Note: This has only been tested on Linux (Ubuntu)*

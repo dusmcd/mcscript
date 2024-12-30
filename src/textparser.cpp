@@ -25,27 +25,27 @@ vector<Token> TextParser::tokenize()
 {
     vector<Token> tokens;
     vector<string> code_components = _parse_code();
+    Token begin = {.type = SyntaxType::begin};
+    begin.content.data = "";
+    begin.content.type = Type::other;
+    tokens.push_back(begin);
 
     for (size_t i = 0; i < code_components.size(); i++)
     {
-        if (i == 0)
-        {
-            Token begin = {.type = SyntaxType::begin};
-            begin.content.data = "";
-            begin.content.type = Type::other;
-            tokens.push_back(begin);
-        }
-
-        else if (syntax_map.count(code_components[i - 1]) > 0 &&
-         syntax_map.at(code_components[i - 1]) == SyntaxType::end)
-        {
-            Token begin = {.type = SyntaxType::begin};
-            begin.content.data = "";
-            begin.content.type = Type::other;
-            tokens.push_back(begin);
-        }
-
         string component = code_components[i];
+        if ( i > 0 && 
+            i < code_components.size() - 1 && 
+            syntax_map.count(code_components[i - 1]) > 0 &&
+            syntax_map.at(code_components[i - 1]) == SyntaxType::end)
+                tokens.push_back(begin);
+        
+
+        if (component.compare("") == 0 ||
+            component.compare(" ") == 0 ||
+            component.compare("\n") == 0)
+            continue;
+
+        
         SyntaxType type = syntax_map.count(component) > 0 ? syntax_map.at(component) : SyntaxType::identifier;
 
         if (_is_number(component))
@@ -96,10 +96,10 @@ vector<string> TextParser::_parse_code()
     int j = 0;
     for (size_t i = 0; i < _text.size(); i++)
     {
-        if (_text[i] == '\n')
-            continue;
+        // if (_text[i] == '\n')
+        //     continue;
 
-        if (_text[i] == ' ')
+        if (_text[i] == ' ' || _text[i] == '\n')
         {
             components.push_back(current_comp);
             current_comp = "";
@@ -148,7 +148,9 @@ vector<string> TextParser::_parse_code()
         }
         else if (_text[i] == '{')
         {
-            components.push_back("{");
+            current_comp = _process_func(i);
+            j = 0;
+            continue;
         }
 
         current_comp.insert(j, 1, _text[i]);
@@ -207,4 +209,21 @@ bool TextParser::_is_valid_closing(string text, char o_symbol, char c_symbol)
     }
 
     return symbol_stack.size() == 0;
+}
+
+string TextParser::_process_func(size_t& pos)
+{
+    string body;
+    int j = 0;
+    while (true)
+    {
+        body.insert(j, 1, _text[pos]);
+        if (_text[pos] == '}' && _is_valid_closing(body, '{', '}'))
+            break;
+
+        j++;
+        pos++;
+    }
+
+    return body;
 }

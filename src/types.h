@@ -41,6 +41,7 @@ enum Type
     integer,
     text,
     boolean,
+    function_t,
     other
 };
 

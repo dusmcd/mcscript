@@ -100,7 +100,6 @@ Object* Program::run()
         
     }
 
-    // TODO: free up object_dict
     delete object_dict["console"];
     object_dict["console"] = nullptr;
     _free_u_objects();

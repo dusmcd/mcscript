@@ -25,7 +25,8 @@ class TextParser
 
     private:
         string _text;
-        string _process_string(uint_64& pos);
+        string _process_string(size_t& pos);
+        string _process_func(size_t& pos);
         vector<string> _parse_code();
         Token _create_u_object_token(string component, vector<string>, size_t& idx);
         bool _is_number(string);
