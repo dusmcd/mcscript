@@ -1,6 +1,7 @@
 #include "textparser.h"
 #include <iostream>
 #include "maps.h"
+#include "errors/my_exception.h"
 
 using std::cout;
 using std::endl;
@@ -96,9 +97,6 @@ vector<string> TextParser::_parse_code()
     int j = 0;
     for (size_t i = 0; i < _text.size(); i++)
     {
-        // if (_text[i] == '\n')
-        //     continue;
-
         if (_text[i] == ' ' || _text[i] == '\n')
         {
             components.push_back(current_comp);
@@ -148,7 +146,11 @@ vector<string> TextParser::_parse_code()
         }
         else if (_text[i] == '{')
         {
+            components.push_back("{");
             current_comp = _process_func(i);
+            components.push_back(current_comp);
+            components.push_back("}");
+            current_comp = "";
             j = 0;
             continue;
         }
@@ -218,8 +220,15 @@ string TextParser::_process_func(size_t& pos)
     while (true)
     {
         body.insert(j, 1, _text[pos]);
-        if (_text[pos] == '}' && _is_valid_closing(body, '{', '}'))
+        if (_text[pos] == '}')
+        {
+            if (!_is_valid_closing(body, '{', '}'))
+                throw MyException("syntax error");
+
+            body = body.substr(1, body.size() - 1);
+            body = body.substr(0, body.size() - 1);
             break;
+        }
 
         j++;
         pos++;
