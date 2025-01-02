@@ -177,6 +177,36 @@ Token TextParser::_create_u_object_token(string component, vector<string> code_c
         token.content.data = component;
         token.content.type = Type::integer;
     }
+    else if (component.compare("function") == 0)
+    {
+        idx++;
+        token = _create_function_token(code_components, idx);
+    }
+
+    return token;
+}
+
+Token TextParser::_create_function_token(vector<string> code_components, size_t& idx)
+{
+    Token token;
+    Func func;
+    bool get_args = false;
+    while (true)
+    {
+        string current_comp = code_components[idx];
+        if (get_args && current_comp.compare(",") != 0)
+            func.args.push_back(current_comp);
+        else if (!get_args)
+            func.name = current_comp;
+        else if (current_comp.compare("(") == 0)
+            get_args = true;
+        else if (current_comp.compare(")") == 0)
+            break; 
+        idx++;
+    }
+    token.content.data = func;
+    token.content.type = Type::function_t;
+    token.type = SyntaxType::u_object;
 
     return token;
 }

@@ -29,6 +29,7 @@ class TextParser
         string _process_func(size_t& pos);
         vector<string> _parse_code();
         Token _create_u_object_token(string component, vector<string>, size_t& idx);
+        Token _create_function_token(vector<string>, size_t& idx);
         bool _is_number(string);
         bool _is_valid_closing(string text, char o_symbol, char c_symbol);
 };

@@ -14,7 +14,7 @@ static const unordered_map<string, SyntaxType> syntax_map = {
     {")", SyntaxType::c_paren},
     {"\"", SyntaxType::u_object},
     {"var", SyntaxType::keyword},
-    {"function", SyntaxType::keyword},
+    {"function", SyntaxType::u_object},
     {"=", SyntaxType::operator_t},
     {"+", SyntaxType::operator_t},
     {"-", SyntaxType::operator_t},

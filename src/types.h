@@ -52,7 +52,7 @@ struct Func
 {
     string body;
     vector<string> args;
-    string name;
+    string name = "";
 };
 
 using data_t = variant<string, Func>;
