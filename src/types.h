@@ -3,10 +3,13 @@
 
 #include <unordered_map>
 #include <string>
+#include <variant>
+#include <vector>
 
 using std::unordered_map;
 using std::string;
-using uint_64 = long unsigned int;
+using std::variant;
+using std::vector;
 
 enum SyntaxType
 {
@@ -45,9 +48,18 @@ enum Type
     other
 };
 
+struct Func
+{
+    string body;
+    vector<string> args;
+    string name;
+};
+
+using data_t = variant<string, Func>;
+
 struct Content
 {
-    string data;
+    data_t data = "";
     Type type;
 };
 
