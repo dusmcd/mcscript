@@ -10,6 +10,7 @@
 
 using std::cout;
 using std::endl;
+using std::get;
 
 Program::Program(vector<Token> tokens)
 {
@@ -26,18 +27,18 @@ Object* Program::run()
     SyntaxTree tree = SyntaxTree();
     Leaf* current_leaf = tree.get_root();
 
-    for (uint_64 i = 0; i < _tokens.size(); i++)
+    for (size_t i = 0; i < _tokens.size(); i++)
     {
         Token token = _tokens[i];
 
         switch(current_leaf->syntax_type)
         {
             case SyntaxType::object:
-                _process_object(token.content.data);
+                _process_object(get<string>(token.content.data));
                 break;
             case SyntaxType::method:
             {
-                _method_names.push_back(token.content.data);
+                _method_names.push_back(get<string>(token.content.data));
                 _operations.push_back(Operations::call_method);
                 break;
             }
@@ -137,7 +138,7 @@ void Program::_process_method(string method_name)
 void Program::_process_u_object(const Token& token)
 {
     Operations next_operation = _operations.size() == 0 ? Operations::none : _operations.back();
-    Object* obj = create_u_object(token.content.type, token.content.data);
+    Object* obj = create_u_object(token.content.type, get<string>(token.content.data));
     _u_objects.push_back(obj);
 
     string name;
@@ -209,16 +210,17 @@ void Program::_process_u_object(const Token& token)
 void Program::_process_identifier(const Token& token)
 {
     Operations next_operation = _operations.back();
+    string data = get<string>(token.content.data);
     switch(next_operation)
     {
         case Operations::declare:
-            _variables[token.content.data] = nullptr;
-            _variable_names.push_back(token.content.data);
+            _variables[data] = nullptr;
+            _variable_names.push_back(data);
             break;
         case Operations::call_method:
-            if (_variables.count(token.content.data) < 1)
+            if (_variables.count(data) < 1)
                 throw MyException("identifier not found");
-            _func_args.push_back(_variables[token.content.data]);
+            _func_args.push_back(_variables[data]);
             break;
         default:
             throw MyException("operation not allowed");
@@ -228,20 +230,22 @@ void Program::_process_identifier(const Token& token)
 
 void Program::_process_keyword(const Token& token)
 {
-    if (operations_map.count(token.content.data) == 0)
+    string data = get<string>(token.content.data);
+    if (operations_map.count(data) == 0)
         throw MyException("not a valid keyword");
 
-    Operations next_operation = operations_map.at(token.content.data);
+    Operations next_operation = operations_map.at(data);
     _operations.push_back(next_operation);
 
 }
 
 void Program::_process_operator(const Token& token)
 {
-    if (operations_map.count(token.content.data) == 0)
+    string data = get<string>(token.content.data);
+    if (operations_map.count(data) == 0)
         throw MyException("not a valid operator");
     
-    Operations next_operation = operations_map.at(token.content.data);
+    Operations next_operation = operations_map.at(data);
     _operations.push_back(next_operation);
 }
 void Program::_free_u_objects()
