@@ -191,17 +191,34 @@ Token TextParser::_create_function_token(vector<string> code_components, size_t&
     Token token;
     Func func;
     bool get_args = false;
+    if (code_components[idx].compare("(") != 0)
+        func.name = code_components[idx];
+
     while (true)
     {
         string current_comp = code_components[idx];
+        if (current_comp.compare(")") == 0)
+        {
+            get_args = false;
+            idx++;
+            continue;
+        }
+        
+        if (current_comp.compare("{") == 0)
+        {
+            idx++;
+            current_comp = code_components[idx];
+            func.body = current_comp;
+        }
+
+        if (current_comp.compare("}") == 0)
+            break;
+
         if (get_args && current_comp.compare(",") != 0)
             func.args.push_back(current_comp);
-        else if (!get_args)
-            func.name = current_comp;
         else if (current_comp.compare("(") == 0)
             get_args = true;
-        else if (current_comp.compare(")") == 0)
-            break; 
+
         idx++;
     }
     token.content.data = func;
