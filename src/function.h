@@ -3,27 +3,28 @@
 
 #include "object.h"
 #include <vector>
+#include "types.h"
 
 using std::vector;
 
 class Function : public Object
 {
     public:
-        Function(string body);
+        Function(const Func& func);
         void Print();
         ~Function() override;
 
         // getters
         string get_body() const;
-        vector<Object*> get_args() const;
+        vector<string> get_args() const;
 
         // setters
         void set_body(string body);
-        void set_args(vector<Object*> args);
+        void set_args(vector<string> args);
 
     private:
         string _body;
-        vector<Object*> _args;
+        vector<string> _args;
 };
 
 

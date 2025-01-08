@@ -6,6 +6,7 @@
 #include "string.h"
 #include "maps.h"
 #include "errors/my_exception.h"
+#include "function.h"
 
 
 using std::cout;
@@ -137,6 +138,13 @@ void Program::_process_method(string method_name)
 
 void Program::_process_u_object(const Token& token)
 {
+    if (token.content.type == Type::function_t)
+    {
+        const Func func = get<Func>(token.content.data);
+        _process_function(func);
+        return;
+    }
+
     Operations next_operation = _operations.size() == 0 ? Operations::none : _operations.back();
     Object* obj = create_u_object(token.content.type, get<string>(token.content.data));
     _u_objects.push_back(obj);
@@ -260,4 +268,11 @@ void Program::_free_u_objects()
     {
         _variables[name] = nullptr;
     }
+}
+
+void Program::_process_function(const Func& func)
+{
+    Function* function = new Function(func);
+    _u_objects.push_back(function);
+    _variables[func.name] = function;
 }

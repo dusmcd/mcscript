@@ -37,6 +37,7 @@ class Program
         void _process_identifier(const Token& token);
         void _process_keyword(const Token& token);
         void _process_operator(const Token& token);
+        void _process_function(const Func& func);
         void _free_u_objects();
 };
 

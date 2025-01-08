@@ -4,9 +4,11 @@
 using std::cout;
 using std::endl;
 
-Function::Function(string body)
+Function::Function(const Func& func)
 {
-    set_body(body);
+    set_body(func.body);
+    set_args(func.args);
+    
 }
 
 Function::~Function()
@@ -24,7 +26,7 @@ string Function::get_body() const
     return _body;
 }
 
-vector<Object*> Function::get_args() const
+vector<string> Function::get_args() const
 {
     return _args;
 }
@@ -35,7 +37,7 @@ void Function::set_body(string body)
     _body = body;
 }
 
-void Function::set_args(vector<Object*> args)
+void Function::set_args(vector<string> args)
 {
     _args = args;
 }

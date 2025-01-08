@@ -13,6 +13,9 @@ string.o: string.cpp string.h
 integer.o: integer.cpp integer.h
 	g++ $< $(flags) -c
 
+function.o: function.cpp function.h
+	g++ $< $(flags) -c
+
 syntax.o: syntax.cpp syntax.h 
 	g++ $< $(flags) -c
 
@@ -38,7 +41,7 @@ main.o: main.cpp textparser.h program.h
 	g++ $< $(flags) -c
 
 main: main.o textparser.o console.o string.o syntax.o program.o objectcreate.o\
- u_objectcreate.o json.o integer.o runner.o my_exception.o
+ u_objectcreate.o json.o integer.o function.o runner.o my_exception.o
 	g++ $^ $(flags) -o $(target)
 
 clean:
