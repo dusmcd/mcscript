@@ -3,7 +3,7 @@
 #include "program.h"
 #include <iostream>
 
-void run(string code, Object* return_addr)
+void run_program(string code, Object* return_addr)
 {
    TextParser parser = TextParser(code);
    try

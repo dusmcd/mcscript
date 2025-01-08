@@ -37,7 +37,7 @@ int main(int argc, char** argv)
         code.insert(i, 1, next);
     }
 
-    run(code);
+    run_program(code);
     return 0;
 }
 

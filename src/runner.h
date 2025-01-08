@@ -6,7 +6,7 @@
 
 using std::string;
 
-void run(string code, Object* return_addr = nullptr);
+void run_program(string code, Object* return_addr = nullptr);
 
 
 #endif

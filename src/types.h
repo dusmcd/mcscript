@@ -30,6 +30,7 @@ enum SyntaxType
 enum Operations
 {
     call_method,
+    call_function,
     declare,
     assign,
     add,

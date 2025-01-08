@@ -38,6 +38,7 @@ class Program
         void _process_keyword(const Token& token);
         void _process_operator(const Token& token);
         void _process_function(const Func& func);
+        void _call_function(string func_name);
         void _free_u_objects();
 };
 

@@ -7,6 +7,7 @@
 #include "maps.h"
 #include "errors/my_exception.h"
 #include "function.h"
+#include "runner.h"
 
 
 using std::cout;
@@ -50,7 +51,10 @@ Object* Program::run()
             }
             case SyntaxType::c_paren:
             {
-                _process_method(_method_names.back());
+                if (_operations.back() == Operations::call_function)
+                    _call_function(_variable_names.back());
+                else
+                    _process_method(_method_names.back());
                 break;
             }
             case SyntaxType::identifier:
@@ -217,7 +221,7 @@ void Program::_process_u_object(const Token& token)
 
 void Program::_process_identifier(const Token& token)
 {
-    Operations next_operation = _operations.back();
+    Operations next_operation = _operations.empty() ? Operations::none : _operations.back();
     string data = get<string>(token.content.data);
     switch(next_operation)
     {
@@ -231,7 +235,16 @@ void Program::_process_identifier(const Token& token)
             _func_args.push_back(_variables[data]);
             break;
         default:
-            throw MyException("operation not allowed");
+            if (_variables.count(data) < 1)
+                throw MyException("operation not allowed");
+
+            Object* obj = _variables.at(data);
+            if (dynamic_cast<Function*>(obj) != nullptr)
+            {
+                _operations.push_back(Operations::call_function);
+                _variable_names.push_back(data);
+            }
+
     }
     
 }
@@ -256,6 +269,7 @@ void Program::_process_operator(const Token& token)
     Operations next_operation = operations_map.at(data);
     _operations.push_back(next_operation);
 }
+
 void Program::_free_u_objects()
 {
     for (Object* obj : _u_objects)
@@ -275,4 +289,10 @@ void Program::_process_function(const Func& func)
     Function* function = new Function(func);
     _u_objects.push_back(function);
     _variables[func.name] = function;
+}
+
+void Program::_call_function(string func_name)
+{
+    Function* function = dynamic_cast<Function*>(_variables[func_name]);
+    run_program(function->get_body());
 }
