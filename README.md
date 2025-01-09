@@ -10,6 +10,6 @@ for later use and do basic arithmetic. This is not intended as a commercial ente
 - From the **src** directory type the following command `make main`
 - Once the project has compiled, type the following command from the root of the project:
     `./main [source file]`
-- There is a sample source file (test.fs) in the project root for demo purposes. All source
+- There is a sample source file (test.ms) in the project root for demo purposes. All source
     files must have the ".ms" extension.
 - *Note: This has only been tested on Linux (Ubuntu)*
