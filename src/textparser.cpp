@@ -150,6 +150,7 @@ vector<string> TextParser::_parse_code()
             current_comp = _process_func(i);
             components.push_back(current_comp);
             components.push_back("}");
+            components.push_back(";");
             current_comp = "";
             j = 0;
             continue;
@@ -267,11 +268,8 @@ string TextParser::_process_func(size_t& pos)
     while (true)
     {
         body.insert(j, 1, _text[pos]);
-        if (_text[pos] == '}')
+        if (_text[pos] == '}' && _is_valid_closing(body, '{', '}'))
         {
-            if (!_is_valid_closing(body, '{', '}'))
-                throw MyException("syntax error");
-
             body = body.substr(1, body.size() - 1);
             body = body.substr(0, body.size() - 1);
             break;
