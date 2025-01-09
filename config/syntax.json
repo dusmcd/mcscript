@@ -1,6 +1,6 @@
 {
     "type": "begin",
-    "num_children": 3,
+    "num_children": 4,
     "children": [
     {
         "type": "object",
@@ -138,6 +138,46 @@
                 "type": "end",
                 "num_children": 0,
                 "children": false
+            }
+        ]
+    },
+    {
+        "type": "identifier",
+        "num_children": 1,
+        "children": [
+            {
+                "type": "o_paren",
+                "num_children": 2,
+                "children": [
+                    {
+                        "type": "c_paren",
+                        "num_children": 1,
+                        "children": [
+                            {
+                                "type": "end",
+                                "num_children": 0,
+                                "children": false
+                            }
+                        ]
+                    },
+                    {
+                        "type": "u_object",
+                        "num_children": 1,
+                        "children": [
+                            {
+                                "type":"c_paren",
+                                "num_children": 1,
+                                "children": [
+                                    {
+                                        "type": "end",
+                                        "num_children": 0,
+                                        "children": false
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     }
