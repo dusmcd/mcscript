@@ -41,11 +41,25 @@ test_case_j join_cases[3] = {
     {.input = split_outputs[2], .ch = '.', .output = "console.log('Hello');"}
 };
 
+struct test_case_fr
+{
+    string input;
+    string find;
+    string replace;
+    string output;
+};
+
+test_case_fr fr_cases[3] = {
+    {.input = "I am the gingerbread man", .find = "man", .replace = "lady", .output = "I am the gingerbread lady"},
+    {.input = "console.log(name);", .find = "name", .replace = "\"Rick\"", .output = "console.log(\"Rick\")"},
+    {.input = "var sum = num1 + num2;", .find = "num1", .replace = "5", .output = "var sum = 5 + num2;"}
+};
+
 
 int main()
 {
     int passed = 0;
-    int total = 2;
+    int total = 3;
 
     if (test_split())
     {
@@ -63,6 +77,15 @@ int main()
     }
     else
         cout << "test_join failed" << endl;
+    
+    cout << endl;
+    if (test_find_and_replace())
+    {
+        passed++;
+        cout << "test_find_and_replace passed" << endl;
+    }
+    else
+        cout << "test_find_and_replace failed" << endl;
     
     cout << passed << " of " << total << " tests passed" << endl;
     return 0;
@@ -124,4 +147,19 @@ void print_vector(vector<string> strs)
     }
 
     cout << "]";
+}
+
+
+bool test_find_and_replace()
+{
+    for (int i = 0; i < 3; i++)
+    {
+        string expected_output = fr_cases[i].output;
+        string actual_output = find_and_replace(fr_cases[i].input, fr_cases[i].find, fr_cases[i].replace, 0);
+
+        if (actual_output.compare(expected_output) != 0)
+            return false;
+    }
+
+    return true;
 }
