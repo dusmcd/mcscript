@@ -1,5 +1,6 @@
 flags = -Wall -std=c++17 -g
 target = ../main
+test_target = ../test
 
 textparser.o: textparser.cpp textparser.h
 	g++ $< $(flags) -c
@@ -44,5 +45,14 @@ main: main.o textparser.o console.o string.o syntax.o program.o objectcreate.o\
  u_objectcreate.o json.o integer.o function.o runner.o my_exception.o
 	g++ $^ $(flags) -o $(target)
 
+string_funcs.o: ./util/string_funcs.cpp ./util/string_funcs.h
+	g++ $< $(flags) -c
+
+test_string_funcs.o: ./util/test_string_funcs.cpp ./util/string_funcs.h
+	g++ $< $(flags) -c
+
+test: test_string_funcs.o string_funcs.o
+	g++ $^ $(flags) -o $(test_target)
+
 clean:
-	rm *.o $(target)
+	rm *.o $(target) $(test_target)
