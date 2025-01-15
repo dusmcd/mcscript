@@ -51,8 +51,8 @@ struct test_case_fr
 
 test_case_fr fr_cases[3] = {
     {.input = "I am the gingerbread man", .find = "man", .replace = "lady", .output = "I am the gingerbread lady"},
-    {.input = "console.log(name);", .find = "name", .replace = "\"Rick\"", .output = "console.log(\"Rick\")"},
-    {.input = "var sum = num1 + num2;", .find = "num1", .replace = "5", .output = "var sum = 5 + num2;"}
+    {.input = "console.log(name)", .find = "name", .replace = "\"Rick\"", .output = "console.log(\"Rick\")"},
+    {.input = "var sum = num1 + num2", .find = "num1", .replace = "5", .output = "var sum = 5 + num2"}
 };
 
 
@@ -152,10 +152,15 @@ void print_vector(vector<string> strs)
 
 bool test_find_and_replace()
 {
+    cout << "'find_and_replace' function test:" << endl;
     for (int i = 0; i < 3; i++)
     {
         string expected_output = fr_cases[i].output;
         string actual_output = find_and_replace(fr_cases[i].input, fr_cases[i].find, fr_cases[i].replace, 0);
+
+        cout << "Testing" << " \"" << fr_cases[i].input << "\"";
+        cout << " with find = \"" << fr_cases[i].find << "\"";
+        cout << " and replace = \"" << fr_cases[i].replace << "\"" << endl;
 
         if (actual_output.compare(expected_output) != 0)
             return false;
