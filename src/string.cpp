@@ -19,6 +19,11 @@ String::~String()
 
 }
 
+string String::get_string() const
+{
+    return _string;
+}
+
 string String::add(const Object* const right) const
 {
     return "";

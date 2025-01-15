@@ -22,6 +22,8 @@ class Function : public Object
         void set_body(string body);
         void set_args(vector<string> args);
 
+        string call(vector<string> vals);
+
     private:
         string _body;
         vector<string> _args;

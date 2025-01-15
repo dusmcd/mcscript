@@ -8,6 +8,7 @@
 #include "errors/my_exception.h"
 #include "function.h"
 #include "runner.h"
+#include "integer.h"
 
 
 using std::cout;
@@ -159,6 +160,9 @@ void Program::_process_u_object(const Token& token)
         case Operations::call_method:
             _func_args.push_back(obj);
             break;
+        case Operations::call_function:
+            _func_args.push_back(obj);
+            break;
         case Operations::assign:
             name = _variable_names.back();
             if (_variables.count(name) < 1)
@@ -294,5 +298,16 @@ void Program::_process_function(const Func& func)
 void Program::_call_function(string func_name)
 {
     Function* function = dynamic_cast<Function*>(_variables[func_name]);
-    run_program(function->get_body());
+    vector<string> vals;
+    for (Object* obj : _func_args)
+    {
+        if (dynamic_cast<Integer*>(obj) != nullptr)
+            vals.push_back(std::to_string(obj->get_num()));
+        else if (dynamic_cast<String*>(obj) != nullptr)
+        {
+            String* u_string = dynamic_cast<String*>(obj);
+            vals.push_back(u_string->get_string());
+        }
+    }
+    run_program(function->call(vals));
 }

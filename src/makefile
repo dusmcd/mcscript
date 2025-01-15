@@ -41,12 +41,12 @@ runner.o: runner.cpp runner.h
 main.o: main.cpp textparser.h program.h
 	g++ $< $(flags) -c
 
-main: main.o textparser.o console.o string.o syntax.o program.o objectcreate.o\
- u_objectcreate.o json.o integer.o function.o runner.o my_exception.o
-	g++ $^ $(flags) -o $(target)
-
 string_funcs.o: ./util/string_funcs.cpp ./util/string_funcs.h
 	g++ $< $(flags) -c
+
+main: main.o textparser.o console.o string.o syntax.o program.o objectcreate.o\
+ u_objectcreate.o json.o integer.o string_funcs.o function.o runner.o my_exception.o
+	g++ $^ $(flags) -o $(target)
 
 test_string_funcs.o: ./util/test_string_funcs.cpp ./util/string_funcs.h
 	g++ $< $(flags) -c

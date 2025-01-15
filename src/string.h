@@ -16,6 +16,7 @@ class String : public Object
         string subtract(const Object* const) const;
         string multiply(const Object* const) const;
         string divide (const Object* const) const;
+        string get_string() const;
 
     private:
         string _string;
