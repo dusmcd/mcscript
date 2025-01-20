@@ -61,5 +61,11 @@ void Function::set_body(string body)
 
 void Function::set_args(vector<string> args)
 {
-    _args = args;
+    for (size_t i = 0; i < args.size(); i++)
+    {
+        if (args[i].size() < 1)
+            continue;
+        
+        _args[i] = args[i];
+    }
 }

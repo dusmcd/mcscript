@@ -15,6 +15,7 @@ class Program
 
     public:
         Program(vector<Token> tokens);
+        Program(vector<Token> tokens, unordered_map<string, Object*> g_variables);
 
         // getter
         vector<Token> get_tokens() const;

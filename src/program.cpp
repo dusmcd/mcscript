@@ -20,6 +20,12 @@ Program::Program(vector<Token> tokens)
     _tokens = tokens;
 }
 
+Program::Program(vector<Token> tokens, unordered_map<string, Object*> g_variables)
+{
+    _tokens = tokens;
+    _variables = g_variables;
+}
+
 vector<Token> Program::get_tokens() const
 {
     return _tokens;
@@ -309,5 +315,5 @@ void Program::_call_function(string func_name)
             vals.push_back(u_string->get_string());
         }
     }
-    run_program(function->call(vals));
+    run_program(function->call(vals), _variables);
 }

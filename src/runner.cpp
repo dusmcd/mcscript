@@ -3,7 +3,7 @@
 #include "program.h"
 #include <iostream>
 
-void run_program(string code, Object* return_addr)
+void run_program(string code)
 {
    TextParser parser = TextParser(code);
    try
@@ -11,14 +11,60 @@ void run_program(string code, Object* return_addr)
         vector<Token> tokens = parser.tokenize();
         
         Program program = Program(tokens);
-        if (return_addr == nullptr)
-          program.run();
-        else
-          *return_addr = *(program.run());
+        program.run();
    }
    catch(const std::exception& e)
    {
         std::cerr << e.what() << '\n';
    }
    
+}
+
+void run_program(string code, Object* return_addr)
+{
+    TextParser parser = TextParser(code);
+    try
+    {
+        vector<Token> tokens = parser.tokenize();
+
+        Program program = Program(tokens);
+        *return_addr = *(program.run());
+    }
+    catch(const std::exception& e)
+    {
+      std::cerr << e.what() << '\n';
+    }
+    
+}
+void run_program(string code, Object* return_addr, unordered_map<string, Object*> g_variables)
+{
+    TextParser parser = TextParser(code);
+    try
+    {
+        vector<Token> tokens = parser.tokenize();
+
+        Program program = Program(tokens, g_variables);
+        *return_addr = *(program.run());
+    }
+    catch(const std::exception& e)
+    {
+      std::cerr << e.what() << '\n';
+    }
+
+}
+void run_program(string code, unordered_map<string, Object*> g_variables)
+{
+    TextParser parser = TextParser(code);
+    try
+    {
+        vector<Token> tokens = parser.tokenize();
+
+        Program program = Program(tokens, g_variables);
+        program.run();
+    }
+    catch(const std::exception& e)
+    {
+      std::cerr << e.what() << '\n';
+    }
+
 }
