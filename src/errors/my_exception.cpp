@@ -1,4 +1,5 @@
 #include "my_exception.h"
+#include <iostream>
 
 MyException::MyException(string msg)
 {
@@ -7,6 +8,7 @@ MyException::MyException(string msg)
 
 const char* MyException::what() const noexcept
 {
+    std::cout << "error: ";
     return _msg.c_str();
 }
 
