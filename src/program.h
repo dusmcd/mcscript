@@ -9,13 +9,14 @@
 
 
 using std::vector;
+using v_map = unordered_map<string, Object*>;
 
 class Program
 {
 
     public:
         Program(vector<Token> tokens);
-        Program(vector<Token> tokens, unordered_map<string, Object*> g_variables);
+        Program(vector<Token> tokens, v_map g_variables);
 
         // getter
         vector<Token> get_tokens() const;
@@ -28,7 +29,8 @@ class Program
         vector<Operations> _operations;
         vector<Object*> _func_args;
         vector<string> _variable_names;
-        unordered_map<string, Object*> _variables;
+        v_map _variables;
+        v_map _globals;
         vector<Object*> _u_objects;
         vector<Object*> _operands;
 

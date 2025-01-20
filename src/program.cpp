@@ -20,7 +20,7 @@ Program::Program(vector<Token> tokens)
     _tokens = tokens;
 }
 
-Program::Program(vector<Token> tokens, unordered_map<string, Object*> g_variables)
+Program::Program(vector<Token> tokens, v_map g_variables)
 {
     _tokens = tokens;
     _variables = g_variables;
@@ -171,9 +171,12 @@ void Program::_process_u_object(const Token& token)
             break;
         case Operations::assign:
             name = _variable_names.back();
-            if (_variables.count(name) < 1)
+            if (_variables.count(name) == 1)
+                _variables[name] = _u_objects.back();
+            else if (_globals.count(name) == 1)
+                _globals[name] = _u_objects.back();
+            else
                 throw MyException("identifier not found");
-            _variables[name] = _u_objects.back();
             _operands.push_back(_u_objects.back());
             break;
         case Operations::add:
@@ -240,12 +243,15 @@ void Program::_process_identifier(const Token& token)
             _variable_names.push_back(data);
             break;
         case Operations::call_method:
-            if (_variables.count(data) < 1)
+            if (_variables.count(data) == 1)
+                _func_args.push_back(_variables.at(data));
+            else if (_globals.count(data) == 1)
+                _func_args.push_back(_globals.at(data));
+            else
                 throw MyException("identifier not found");
-            _func_args.push_back(_variables[data]);
             break;
         default:
-            if (_variables.count(data) < 1)
+            if (_variables.count(data) < 1 && _globals.count(data) < 1)
                 throw MyException("operation not allowed");
 
             Object* obj = _variables.at(data);
