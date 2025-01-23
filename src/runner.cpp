@@ -3,6 +3,8 @@
 #include "program.h"
 #include <iostream>
 
+using std::endl;
+
 void run_program(string code)
 {
    TextParser parser = TextParser(code);
@@ -15,7 +17,7 @@ void run_program(string code)
    }
    catch(const std::exception& e)
    {
-        std::cerr << e.what() << '\n';
+        std::cerr << e.what() << endl;
    }
    
 }
@@ -32,7 +34,7 @@ void run_program(string code, Object* return_addr)
     }
     catch(const std::exception& e)
     {
-      std::cerr << e.what() << '\n';
+      std::cerr << e.what() << endl;
     }
     
 }
@@ -48,7 +50,7 @@ void run_program(string code, Object* return_addr, unordered_map<string, Object*
     }
     catch(const std::exception& e)
     {
-      std::cerr << e.what() << '\n';
+      std::cerr << e.what() << endl;
     }
 
 }
@@ -64,7 +66,7 @@ void run_program(string code, unordered_map<string, Object*> g_variables)
     }
     catch(const std::exception& e)
     {
-      std::cerr << e.what() << '\n';
+      std::cerr << e.what() << endl;
     }
 
 }

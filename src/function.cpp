@@ -39,7 +39,7 @@ string Function::call(vector<string> vals)
     {
         string val = vals[j];
         string arg = _args[j];
-        for (size_t i; i < stmts.size(); i++)
+        for (size_t i = 0; i < stmts.size(); i++)
         {
             stmts[i] = find_and_replace(stmts[i], arg, val, 0);
         }
@@ -66,6 +66,6 @@ void Function::set_args(vector<string> args)
         if (args[i].size() < 1)
             continue;
         
-        _args[i] = args[i];
+        _args.push_back(args[i]);
     }
 }
