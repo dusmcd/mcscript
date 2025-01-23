@@ -7,6 +7,7 @@ using std::endl;
 bool test_split();
 bool test_join();
 bool test_find_and_replace();
+bool test_is_found();
 void print_vector(vector<string>);
 
 struct test_case_s
@@ -55,11 +56,24 @@ test_case_fr fr_cases[3] = {
     {.input = "var sum = num1 + num2", .find = "num1", .replace = "5", .output = "var sum = 5 + num2"}
 };
 
+struct test_case_found
+{
+    string input;
+    string find;
+    bool output;
+};
+
+test_case_found is_found_cases[3] = {
+    {.input = "\nreturn true", .find = "return", .output = true},
+    {.input = "var num = 5", .find = "return", .output = false},
+    {.input = "return true\n", .find = "return", .output = true}
+};
+
 
 int main()
 {
     int passed = 0;
-    int total = 3;
+    int total = 4;
 
     if (test_split())
     {
@@ -86,6 +100,15 @@ int main()
     }
     else
         cout << "test_find_and_replace failed" << endl;
+    
+    cout << endl;
+    if (test_is_found())
+    {
+        passed++;
+        cout << "test_is_found passed" << endl;
+    }
+    else
+        cout << "test_is_found failed" << endl;
     
     cout << passed << " of " << total << " tests passed" << endl;
     return 0;
@@ -163,6 +186,24 @@ bool test_find_and_replace()
         cout << " and replace = \"" << fr_cases[i].replace << "\"" << endl;
 
         if (actual_output.compare(expected_output) != 0)
+            return false;
+    }
+
+    return true;
+}
+
+bool test_is_found()
+{
+    cout << "'is_found' function test:" << endl;
+    for (int i = 0; i < 3; i++)
+    {
+        bool expected_output = is_found_cases[i].output;
+        bool actual_output = is_found(is_found_cases[i].input, is_found_cases[i].find);
+
+        cout << "Testing" << " \"" << is_found_cases[i].input << "\"";
+        cout << " with find = \"" << is_found_cases[i].find << "\"" << endl;
+
+        if (actual_output != expected_output)
             return false;
     }
 

@@ -84,3 +84,22 @@ string find_and_replace(const string& str, string find, string replace, int pos)
     pos++;
     return find_and_replace(next, find, replace, pos);
 }
+
+bool is_found(const string& str, string find)
+{
+    vector<string> words = split(str, ' ');
+    for (string word : words)
+    {
+        string temp1 = word.substr(1, word.size() - 1);
+        string temp2 = word.substr(0, word.size() - 1);
+
+        if (word.compare(find) == 0)
+            return true;
+        else if (temp1.compare(find) == 0)
+            return true;
+        else if (temp2.compare(find) == 0)
+            return true;
+    }
+
+    return false;
+}
