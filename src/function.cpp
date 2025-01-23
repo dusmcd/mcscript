@@ -69,3 +69,8 @@ void Function::set_args(vector<string> args)
         _args.push_back(args[i]);
     }
 }
+
+bool Function::is_return_val()
+{
+    return is_found(_body, "return");
+}

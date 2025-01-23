@@ -37,6 +37,7 @@ enum Operations
     subtract,
     multiply,
     divide,
+    return_func,
     none
 };
 

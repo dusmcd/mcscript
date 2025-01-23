@@ -90,9 +90,14 @@ bool is_found(const string& str, string find)
     vector<string> words = split(str, ' ');
     for (string word : words)
     {
-        string temp1 = word.substr(1, word.size() - 1);
-        string temp2 = word.substr(0, word.size() - 1);
-
+        string temp1 = "";
+        string temp2 = "";
+        if (word.size() > 0)
+        {
+            temp1 = word.substr(1, word.size() - 1);
+            temp2 = word.substr(0, word.size() - 1);
+        }
+        
         if (word.compare(find) == 0)
             return true;
         else if (temp1.compare(find) == 0)

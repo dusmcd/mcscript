@@ -14,6 +14,7 @@ static const unordered_map<string, SyntaxType> syntax_map = {
     {")", SyntaxType::c_paren},
     {"\"", SyntaxType::u_object},
     {"var", SyntaxType::keyword},
+    {"return", SyntaxType::keyword},
     {"function", SyntaxType::u_object},
     {"=", SyntaxType::operator_t},
     {"+", SyntaxType::operator_t},
@@ -25,6 +26,7 @@ static const unordered_map<string, SyntaxType> syntax_map = {
 
 static const unordered_map<string, Operations> operations_map = {
     {"var", Operations::declare},
+    {"return", Operations::return_func},
     {"=", Operations::assign},
     {"+", Operations::add},
     {"-", Operations::subtract},

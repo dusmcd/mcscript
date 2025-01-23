@@ -23,6 +23,7 @@ class Function : public Object
         void set_args(vector<string> args);
 
         string call(vector<string> vals);
+        bool is_return_val();
 
     private:
         string _body;

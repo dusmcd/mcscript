@@ -173,6 +173,7 @@ void Program::_process_u_object(const Token& token)
     {
         case Operations::call_method:
             _func_args.push_back(obj);
+            _operations.pop_back();
             break;
         case Operations::call_function:
             _func_args.push_back(obj);
@@ -186,6 +187,7 @@ void Program::_process_u_object(const Token& token)
             else
                 throw MyException("identifier not found");
             _operands.push_back(_u_objects.back());
+            // _operations.pop_back();
             break;
         case Operations::add:
             _operands.push_back(obj);
@@ -324,5 +326,18 @@ void Program::_call_function(string func_name)
             vals.push_back(u_string->get_string());
         }
     }
-    run_program(function->call(vals), _variables);
+    _variable_names.pop_back();
+    _operations.pop_back();
+    
+    Operations next_operation = _operations.empty() ? Operations::none : _operations.back();
+    bool is_var_name = !_variable_names.empty();
+
+    if (function->is_return_val() && is_var_name && next_operation == Operations::assign)
+    {
+        Object* return_addr = _variables.at(_variable_names.back());
+        run_program(function->call(vals), return_addr, _variables);
+    }
+    else
+        run_program(function->call(vals), _variables);
+    
 }
