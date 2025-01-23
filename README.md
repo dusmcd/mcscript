@@ -1,9 +1,13 @@
 # McScript Interpreter
 
 I wrote an interpreter for a language that I am calling "McScript". The syntax
-mimics that of basic JavaScript. For now, the only thing this language can do is
-print strings and integers to the standard output. It can also store variables in memory
-for later use and do basic arithmetic. This is not intended as a commercial enterprise, but just for fun.
+mimics that of basic JavaScript.
+
+## Current Features
+- Prints integers and strings to the standard output
+- Basic arithmetic functions (i.e., addition, subtraction, multiplication, and division)
+- Store variables in memory for later use
+- Function declarations and calls (everything that can be done in the global scope can be done inside a function)
 
 ## How to Use
 - Clone repository to local machine
@@ -12,4 +16,4 @@ for later use and do basic arithmetic. This is not intended as a commercial ente
     `./main [source file]`
 - There is a sample source file (test.ms) in the project root for demo purposes. All source
     files must have the ".ms" extension.
-- *Note: This has only been tested on Linux (Ubuntu)*
+- *Note: This has only been tested on Ubuntu 22.04*
