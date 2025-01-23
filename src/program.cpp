@@ -9,6 +9,7 @@
 #include "function.h"
 #include "runner.h"
 #include "integer.h"
+#include <typeinfo>
 
 
 using std::cout;
@@ -157,9 +158,16 @@ void Program::_process_u_object(const Token& token)
     }
 
     Operations next_operation = _operations.size() == 0 ? Operations::none : _operations.back();
-    Object* obj = create_u_object(token.content.type, get<string>(token.content.data));
-    _u_objects.push_back(obj);
 
+    Object* obj;
+    if (_variables.count(get<string>(token.content.data)) == 1)
+        obj = _variables.at(get<string>(token.content.data));
+    else
+    {
+        obj = create_u_object(token.content.type, get<string>(token.content.data));
+        _u_objects.push_back(obj);
+    }
+         
     string name;
     switch(next_operation)
     {
@@ -242,24 +250,19 @@ void Program::_process_identifier(const Token& token)
             _variables[data] = nullptr;
             _variable_names.push_back(data);
             break;
-        case Operations::call_method:
-            if (_variables.count(data) == 1)
-                _func_args.push_back(_variables.at(data));
-            else if (_globals.count(data) == 1)
-                _func_args.push_back(_globals.at(data));
-            else
-                throw MyException("identifier not found");
-            break;
         default:
             if (_variables.count(data) < 1 && _globals.count(data) < 1)
                 throw MyException("operation not allowed");
 
             Object* obj = _variables.at(data);
-            if (dynamic_cast<Function*>(obj) != nullptr)
+            _variable_names.push_back(data);
+            if (typeid(*obj) == typeid(Function))
             {
                 _operations.push_back(Operations::call_function);
-                _variable_names.push_back(data);
             }
+            else
+                _process_u_object(token);
+            
 
     }
     
