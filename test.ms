@@ -7,4 +7,4 @@ function print_square(num) {
     console.log(square);
 }
 
-print_square(5);
+print_square(12);
