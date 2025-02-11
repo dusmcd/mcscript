@@ -4,9 +4,8 @@
 #include <unordered_map>
 #include "types.h"
 
-using std::unordered_map;
 
-static const unordered_map<string, SyntaxType> syntax_map = {
+static const std::unordered_map<std::string, ::SyntaxType> syntax_map = {
     {"console", SyntaxType::object},
     {"log", SyntaxType::method},
     {".", SyntaxType::dot},
@@ -24,7 +23,7 @@ static const unordered_map<string, SyntaxType> syntax_map = {
     {";", SyntaxType::end}
 };
 
-static const unordered_map<string, Operations> operations_map = {
+static const std::unordered_map<std::string, ::Operations> operations_map = {
     {"var", Operations::declare},
     {"return", Operations::return_func},
     {"=", Operations::assign},
@@ -34,7 +33,7 @@ static const unordered_map<string, Operations> operations_map = {
     {"/", Operations::divide},
 };
 
-static const unordered_map<string, SyntaxType> string_to_type = {
+static const std::unordered_map<std::string, ::SyntaxType> string_to_type = {
     {"begin", SyntaxType::begin},
     {"object", SyntaxType::object},
     {"method", SyntaxType::method},

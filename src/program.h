@@ -8,40 +8,39 @@
 #include "types.h"
 
 
-using std::vector;
-using v_map = unordered_map<string, Object*>;
+using v_map = std::unordered_map<std::string, ::Object*>;
 
 class Program
 {
 
     public:
-        Program(vector<Token> tokens);
-        Program(vector<Token> tokens, v_map g_variables);
+        Program(std::vector<::Token> tokens);
+        Program(std::vector<::Token> tokens, v_map g_variables);
 
         // getter
-        vector<Token> get_tokens() const;
+        std::vector<::Token> get_tokens() const;
 
         Object* run();
     private:
-        vector<Token> _tokens;
-        vector<string> _object_names;
-        vector<string> _method_names;
-        vector<Operations> _operations;
-        vector<Object*> _func_args;
-        vector<string> _variable_names;
+        std::vector<::Token> _tokens;
+        std::vector<std::string> _object_names;
+        std::vector<std::string> _method_names;
+        std::vector<::Operations> _operations;
+        std::vector<::Object*> _func_args;
+        std::vector<std::string> _variable_names;
         v_map _variables;
         v_map _globals;
-        vector<Object*> _u_objects;
-        vector<Object*> _operands;
+        std::vector<::Object*> _u_objects;
+        std::vector<::Object*> _operands;
 
-        void _process_object(string object_name);
-        void _process_method(string method_name);
-        void _process_u_object(const Token& token);
-        void _process_identifier(const Token& token);
-        void _process_keyword(const Token& token);
-        void _process_operator(const Token& token);
-        void _process_function(const Func& func);
-        void _call_function(string func_name);
+        void _process_object(std::string object_name);
+        void _process_method(std::string method_name);
+        void _process_u_object(const ::Token& token);
+        void _process_identifier(const ::Token& token);
+        void _process_keyword(const ::Token& token);
+        void _process_operator(const ::Token& token);
+        void _process_function(const ::Func& func);
+        void _call_function(std::string func_name);
         void _free_u_objects();
 };
 

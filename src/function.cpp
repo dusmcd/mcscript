@@ -4,6 +4,8 @@
 
 using std::cout;
 using std::endl;
+using std::vector;
+using std::string;
 
 Function::Function(const Func& func)
 {

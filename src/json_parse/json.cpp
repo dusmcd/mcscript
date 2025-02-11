@@ -1,6 +1,9 @@
 #include "json.h"
 #include "../maps.h"
 
+using std::string;
+using std::vector;
+
 Json::Json(string json)
 {
     set_json(json);

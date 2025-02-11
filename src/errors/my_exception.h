@@ -4,23 +4,21 @@
 #include <iostream>
 #include <string>
 
-using std::string;
-using std::exception;
 
-class MyException : public exception
+class MyException : public std::exception
 {
     public:
-        MyException(string msg);
+        MyException(std::string msg);
         const char* what() const noexcept; 
 
         // getters
-        string get_msg() const;
+        std::string get_msg() const;
 
         // setters
-        void set_msg(string msg);
+        void set_msg(std::string msg);
 
     private:
-        string _msg;
+        std::string _msg;
 };
 
 

@@ -6,10 +6,6 @@
 #include <variant>
 #include <vector>
 
-using std::unordered_map;
-using std::string;
-using std::variant;
-using std::vector;
 
 enum SyntaxType
 {
@@ -52,12 +48,12 @@ enum Type
 
 struct Func
 {
-    string body;
-    vector<string> args;
-    string name = "";
+    std::string body;
+    std::vector<std::string> args;
+    std::string name = "";
 };
 
-using data_t = variant<string, Func>;
+using data_t = std::variant<std::string, Func>;
 
 struct Content
 {

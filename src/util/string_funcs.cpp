@@ -1,5 +1,8 @@
 #include "string_funcs.h"
 
+using std::string;
+using std::vector;
+
 vector<string> split(string str, char ch)
 {
     vector<string> result;

@@ -7,15 +7,13 @@
 #include "console.h"
 #include <functional>
 
-using std::string;
-using std::unordered_map;
 
 
-Base* create_object(string object_name);
+Base* create_object(std::string object_name);
 
 Base* create_console();
 
-static unordered_map<string, std::function<Base*(void)>> factory_map = {
+static std::unordered_map<std::string, std::function<Base*(void)>> factory_map = {
     {"console", &create_console}
 };
 

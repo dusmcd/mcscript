@@ -1,6 +1,6 @@
 #include "objectcreate.h"
 
-Base* create_object(string object_name)
+Base* create_object(std::string object_name)
 {
     return factory_map[object_name]();
 }

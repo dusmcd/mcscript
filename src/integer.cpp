@@ -4,6 +4,7 @@
 using std::cout;
 using std::endl;
 using std::to_string;
+using std::string;
 
 Integer::Integer(int num)
 {

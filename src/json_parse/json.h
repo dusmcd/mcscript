@@ -5,8 +5,6 @@
 #include "../types.h"
 #include <vector>
 
-using std::string;
-using std::vector;
 
 /*
     {
@@ -20,21 +18,21 @@ using std::vector;
 class Json
 {
     public:
-        Json(string json);
+        Json(std::string json);
         Leaf* parse();
 
         // setters
-        void set_json(string json);
+        void set_json(std::string json);
 
     private:
-        string _get_string(size_t& pos);
-        string _get_integer(size_t& pos);
+        std::string _get_string(size_t& pos);
+        std::string _get_integer(size_t& pos);
         Leaf _process_object(size_t& idx);
         Leaf* _process_array(size_t& idx, int size = 2);
-        void _set_leaf(Leaf& leaf, string key, string val, size_t& idx);
-        string _json;
-        vector<string> _split_to_components();
-        vector<string> _components;
+        void _set_leaf(Leaf& leaf, std::string key, std::string val, size_t& idx);
+        std::string _json;
+        std::vector<std::string> _split_to_components();
+        std::vector<std::string> _components;
 };
 
 

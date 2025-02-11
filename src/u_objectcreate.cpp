@@ -2,6 +2,8 @@
 #include "string.h"
 #include "integer.h"
 
+using std::string;
+
 Object* create_u_object(Type object_type, string content)
 {
     return u_factory_map[object_type](content);

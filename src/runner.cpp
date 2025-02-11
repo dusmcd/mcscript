@@ -4,6 +4,9 @@
 #include <iostream>
 
 using std::endl;
+using std::unordered_map;
+using std::vector;
+using std::string;
 
 void run_program(string code)
 {

@@ -4,14 +4,12 @@
 #include <string>
 #include <vector>
 
-using std::string;
-using std::vector;
 
 
-vector<string> split(string str, char ch);
-string join(vector<string>, char);
-string find_and_replace(const string& str, string find, string replace, int pos = 0);
-bool is_found(const string& str, string find);
+std::vector<std::string> split(std::string str, char ch);
+std::string join(std::vector<std::string>, char);
+std::string find_and_replace(const std::string& str, std::string find, std::string replace, int pos = 0);
+bool is_found(const std::string& str, std::string find);
 
 
 

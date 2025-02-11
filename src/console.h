@@ -7,9 +7,6 @@
 #include <functional>
 #include <string>
 
-using std::unordered_map;
-using std::function;
-using std::string;
 
 
 class Console : public Base
@@ -19,10 +16,10 @@ class Console : public Base
         ~Console() override;
         void Log(Object*) const;
 
-        void CallMethod(string method_name, Object* arg) override;
+        void CallMethod(std::string method_name, Object* arg) override;
     
     private:
-        unordered_map<string, function<void(const Console&, Object*)>> _method_map;
+        std::unordered_map<std::string, std::function<void(const Console&, Object*)>> _method_map;
         void _set_map();
 
 };

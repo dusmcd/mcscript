@@ -6,10 +6,8 @@
 #include "base.h"
 #include "object.h"
 
-using std::string;
-using std::unordered_map;
 
-static unordered_map<string, Base*> object_dict = 
+static std::unordered_map<std::string, Base*> object_dict = 
 {
     {"console", nullptr}
 };

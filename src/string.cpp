@@ -3,6 +3,7 @@
 
 using std::cout;
 using std::endl;
+using std::string;
 
 
 String::String(string content)

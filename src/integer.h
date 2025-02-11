@@ -10,10 +10,10 @@ class Integer : public Object
         Integer(int num);
         void Print();
         ~Integer() override;
-        string add(const Object* const) const;
-        string subtract(const Object* const) const;
-        string multiply(const Object* const) const;
-        string divide(const Object* const) const;
+        std::string add(const Object* const) const;
+        std::string subtract(const Object* const) const;
+        std::string multiply(const Object* const) const;
+        std::string divide(const Object* const) const;
 
         // setters
         void set_num(int num);

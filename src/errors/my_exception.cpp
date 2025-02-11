@@ -1,6 +1,8 @@
 #include "my_exception.h"
 #include <iostream>
 
+using std::string;
+
 MyException::MyException(string msg)
 {
     set_msg(msg);

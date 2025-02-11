@@ -17,7 +17,7 @@ void Console::Log(Object* obj) const
 }
 
 
-void Console::CallMethod(string method_name, Object* arg)
+void Console::CallMethod(std::string method_name, Object* arg)
 {
     _method_map[method_name](*this, arg);
 }

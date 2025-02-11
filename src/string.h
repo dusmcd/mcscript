@@ -4,22 +4,21 @@
 #include "object.h"
 #include <string>
 
-using std::string;
 
-class String : public Object
+class String : public ::Object
 {
     public:
         void Print();
-        String(string content);
+        String(std::string content);
         ~String() override;
-        string add(const Object* const) const;
-        string subtract(const Object* const) const;
-        string multiply(const Object* const) const;
-        string divide (const Object* const) const;
-        string get_string() const;
+        std::string add(const Object* const) const;
+        std::string subtract(const Object* const) const;
+        std::string multiply(const Object* const) const;
+        std::string divide (const Object* const) const;
+        std::string get_string() const;
 
     private:
-        string _string;
+        std::string _string;
 };
 
 

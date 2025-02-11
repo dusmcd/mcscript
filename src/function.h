@@ -5,7 +5,6 @@
 #include <vector>
 #include "types.h"
 
-using std::vector;
 
 class Function : public Object
 {
@@ -15,19 +14,19 @@ class Function : public Object
         ~Function() override;
 
         // getters
-        string get_body() const;
-        vector<string> get_args() const;
+        std::string get_body() const;
+        std::vector<std::string> get_args() const;
 
         // setters
-        void set_body(string body);
-        void set_args(vector<string> args);
+        void set_body(std::string body);
+        void set_args(std::vector<std::string> args);
 
-        string call(vector<string> vals);
+        std::string call(std::vector<std::string> vals);
         bool is_return_val();
 
     private:
-        string _body;
-        vector<string> _args;
+        std::string _body;
+        std::vector<std::string> _args;
 };
 
 

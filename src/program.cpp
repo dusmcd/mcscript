@@ -14,7 +14,8 @@
 
 using std::cout;
 using std::endl;
-using std::get;
+using std::string;
+using std::vector;
 
 Program::Program(vector<Token> tokens)
 {
@@ -44,11 +45,11 @@ Object* Program::run()
         switch(current_leaf->syntax_type)
         {
             case SyntaxType::object:
-                _process_object(get<string>(token.content.data));
+                _process_object(std::get<string>(token.content.data));
                 break;
             case SyntaxType::method:
             {
-                _method_names.push_back(get<string>(token.content.data));
+                _method_names.push_back(std::get<string>(token.content.data));
                 _operations.push_back(Operations::call_method);
                 break;
             }
@@ -152,7 +153,7 @@ void Program::_process_u_object(const Token& token)
 {
     if (token.content.type == Type::function_t)
     {
-        const Func func = get<Func>(token.content.data);
+        const Func func = std::get<Func>(token.content.data);
         _process_function(func);
         return;
     }
@@ -160,11 +161,11 @@ void Program::_process_u_object(const Token& token)
     Operations next_operation = _operations.size() == 0 ? Operations::none : _operations.back();
 
     Object* obj;
-    if (_variables.count(get<string>(token.content.data)) == 1)
-        obj = _variables.at(get<string>(token.content.data));
+    if (_variables.count(std::get<string>(token.content.data)) == 1)
+        obj = _variables.at(std::get<string>(token.content.data));
     else
     {
-        obj = create_u_object(token.content.type, get<string>(token.content.data));
+        obj = create_u_object(token.content.type, std::get<string>(token.content.data));
         _u_objects.push_back(obj);
     }
          
@@ -245,7 +246,7 @@ void Program::_process_u_object(const Token& token)
 void Program::_process_identifier(const Token& token)
 {
     Operations next_operation = _operations.empty() ? Operations::none : _operations.back();
-    string data = get<string>(token.content.data);
+    string data = std::get<string>(token.content.data);
     switch(next_operation)
     {
         case Operations::declare:
@@ -272,7 +273,7 @@ void Program::_process_identifier(const Token& token)
 
 void Program::_process_keyword(const Token& token)
 {
-    string data = get<string>(token.content.data);
+    string data = std::get<string>(token.content.data);
     if (operations_map.count(data) == 0)
         throw MyException("not a valid keyword");
 
@@ -283,7 +284,7 @@ void Program::_process_keyword(const Token& token)
 
 void Program::_process_operator(const Token& token)
 {
-    string data = get<string>(token.content.data);
+    string data = std::get<string>(token.content.data);
     if (operations_map.count(data) == 0)
         throw MyException("not a valid operator");
     
